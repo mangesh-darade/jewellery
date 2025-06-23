@@ -17,10 +17,14 @@
             width: 15%;
         }
         td.text-end{
-            width: 20%;
+            width: 15%;
         }
         input.form-control.rate-field.text-end {
             text-align: right;
+        }
+        .col-lg-12{
+          width: 90%;
+          margin-left: 6rem;
         }
     </style>
 </head>
