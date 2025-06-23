@@ -9,6 +9,19 @@
         #msg {
             margin-top: 10px;
         }
+        .purity_set,.unit_set {
+        text-align: center;
+        vertical-align: middle;
+        }
+        td.purity_set, td.unit_set,td.metal_set{
+            width: 15%;
+        }
+        td.text-end{
+            width: 20%;
+        }
+        input.form-control.rate-field.text-end {
+            text-align: right;
+        }
     </style>
 </head>
 <body class="p-3">
@@ -28,9 +41,9 @@
             <?php foreach ($rates as $row): 
                 ?>
                 <tr>
-                    <td><?php echo $row->metal_type; ?></td>
-                    <td><?php echo $row->metal_purity ?: '-'; ?></td>
-                    <td><?php echo $row->unit; ?></td>
+                    <td class="metal_set"><?php echo $row->metal_type; ?></td>
+                    <td class="purity_set"><?php echo $row->metal_purity ?: '-'; ?></td>
+                    <td class="unit_set"><?php echo $row->unit; ?></td>
                     <td class="text-end">
                         <input type="text" class="form-control rate-field text-end" data-id="<?php echo $row->id; ?>" value="<?php echo $this->sma->formatMoney($row->rate); ?>">
                     </td>
