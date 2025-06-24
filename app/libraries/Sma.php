@@ -3712,10 +3712,10 @@ class Sma {
                     . '<th colspan="' . $total_column_offset . '" >' . lang("paid_amount") . '</th>'
                     . '<th class="text-left" style="padding:1px 1px; text-align: right;">' . $this->formatMoney($return_sale ? ($inv->paid + $return_sale->paid) : $inv->paid) . '</th>'
                     . '</tr>';
-                    $footer_row6 = $footer_row6 . ' <tr>'
-                    . '<th colspan="' . $total_column_offset . '" >' . lang("Balance_Amount") . '</th>'
-                    . '<th class="text-left" style="padding:1px 1px; text-align: right;">' . $this->formatMoney(($return_sale ? (($inv->grand_total + $inv->rounding) + ($return_sale->grand_total + $return_sale->rounding)) : ($inv->grand_total + $inv->rounding)) - ($return_sale ? ($inv->paid + $return_sale->paid) : $inv->paid)) . '</th>'
-                    . '</tr>';
+                    // $footer_row6 = $footer_row6 . ' <tr>'
+                    // . '<th colspan="' . $total_column_offset . '" >' . lang("Balance_Amount") . '</th>'
+                    // . '<th class="text-left" style="padding:1px 1px; text-align: right;">' . $this->formatMoney(($return_sale ? (($inv->grand_total + $inv->rounding) + ($return_sale->grand_total + $return_sale->rounding)) : ($inv->grand_total + $inv->rounding)) - ($return_sale ? ($inv->paid + $return_sale->paid) : $inv->paid)) . '</th>'
+                    // . '</tr>';
 
         endif;
         //------------------------Partial Paid End ---------------------//

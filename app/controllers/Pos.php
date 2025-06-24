@@ -563,7 +563,8 @@ class Pos extends MY_Controller {
                     $net_unit_price = $this->sma->formatDecimal($net_unit_price, 4);
                     $unit_price = $this->sma->formatDecimal($unit_price, 4);
                     $net_price = $this->sma->formatDecimal(($mrp * $item_quantity), 4);
-                    $subtotal = $this->sma->formatDecimal(($unit_price * $item_quantity), 4);
+                    // $subtotal = $this->sma->formatDecimal(($unit_price * $item_quantity), 4);
+                    $subtotal = $this->sma->formatDecimal(($making_charges + $jewellery_Price), 4);
 
                     if ($interStateTax) {
                         $item_gst = $tax_details->rate;
