@@ -3260,12 +3260,12 @@ class Sma {
                 elseif ($data == 'real_unit_price'):
                     $table_body = $table_body . '<td >' . $this->custom_format(($row->real_unit_price + $VariantPrice), $obj->format) . '</td>';
                 elseif ($data == 'Article_Qty'):
-                    $table_body = $table_body . '<td >' . $this->custom_format(($row->article_qty), $obj->format) . '</td>';
+                    $table_body = $table_body . '<td style="text-align:center;">' . $this->custom_format(($row->article_qty), $obj->format) . '</td>';
                 elseif ($data == 'Making_charges'):
-                    $table_body = $table_body . '<td >' . $this->custom_format(($row->making_charges), $obj->format) . '</td>';
+                    $table_body = $table_body . '<td style="text-align:right;">' . $this->custom_format(($row->making_charges), $obj->format) . '</td>';
                 elseif ($data == 'jewellery_price'):
 
-                    $table_body = $table_body . '<td >' . $this->custom_format(($row->jewellery_Price), $obj->format).'</td>';
+                    $table_body = $table_body . '<td style="text-align:right;">' . $this->custom_format(($row->jewellery_Price), $obj->format).'</td>';
 
                 elseif (!empty($obj->formula) && strpos($data, '|')):
                     $_data_arr = explode('|', $data);
@@ -3349,7 +3349,7 @@ class Sma {
                             break;
                     }
                     if ($data == 'unit_quantity' || $data == 'quantity') {
-                        $table_body .= '<td class="' . $class . '" style="text-align: right;"><span ' . ($printer->qty_bold ? 'style="font-weight:bold;"' : '') . '>' . number_format($row->quantity, 2) . '</span></td>';
+                        $table_body .= '<td class="' . $class . '" style="text-align: center;"><span ' . ($printer->qty_bold ? 'style="font-weight:bold;"' : '') . '>' . number_format($row->quantity, 2) . '</span></td>';
                         // $table_body = $table_body . '<td class="' . $class . '"><span ' . ($printer->qty_bold ? 'style="font-weight:bold"' : '') . '>' . $res . '</span></td>';
                     } else {
                         $table_body .= '<td class="' . $class . '" style="text-align: right;">' . $res . '</td>';
@@ -3564,11 +3564,11 @@ class Sma {
               
                 switch ($data) { 
                     case 'unit_quantity':
-                        $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatQuantity($qty_total) . '</th>';
+                        $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: center;">' . $this->formatQuantity($qty_total) . '</th>';
                         break;
 
                     case 'quantity':
-                        $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatQuantity($quantity_total) . '</th>';
+                        $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: center;">' . $this->formatQuantity($quantity_total) . '</th>';
                         break;
 
                     case 'item_weight':
@@ -3621,7 +3621,7 @@ class Sma {
                         $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatMoney($saving) . '</th>';
                         break;
                     case 'Article_Qty':
-                        $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatQuantity($article_qty) . '</th>';
+                        $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: center;">' . $this->formatQuantity($article_qty) . '</th>';
                         break;
                     case 'Making_charges':
                         $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatQuantity($making_charges) . '</th>';

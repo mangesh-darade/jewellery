@@ -1740,7 +1740,17 @@ $(document).ready(function () {
         $('#mnet_price').text(formatMoney(unit_price));
         $('#mpro_tax').text(formatMoney(pr_tax_val));
     });
+////////////////////////////////////////////////////////////////////////////
 
+$(document).on('change', '.making_charges', function () {
+    let item_id = $(this).attr('data-item');
+    let value = $(this).val();
+    
+    positems[item_id].row.making_charges_rate = value;
+    resetCartItems();
+    localStorage.setItem('positems', JSON.stringify(positems));
+    loadItems();
+});
     /* --------------------------
      * Edit Row Quantity Method
      --------------------------- */
@@ -3863,8 +3873,10 @@ tr_html += '<td class="text-center">' +
             //////////////////////////////////////////////// Price End/////////////////////////////////
  
             //////////////////////////////////////////////// Maing Charges/////////////////////////////////
+       tr_html += '<td class="text-center">' +'<input type="text" name="making_charges[]" ' +'data-item="' + item_id + '" ' +'class="form-control input-sm text-center making_charges" ' + 'value="' + formatMoney(making_charges_rate) + '">' +
+    '</td>';
 
-            tr_html += '<td class="text-center"><input type="text" name="making_charges[]" class="form-control input-sm text-center making_charges" value="' + formatMoney(making_charges_rate) + '"></td>';
+            // tr_html += '<td class="text-center"><input type="text" name="making_charges[]" data-item="' + item_id + '" class="form-control input-sm text-center making_charges" value="' + formatMoney(making_charges_rate) + '"></td>';
             //////////////////////////////////////////////// Maing Charges End/////////////////////////////////
 
             //}            
