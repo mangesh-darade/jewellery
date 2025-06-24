@@ -209,9 +209,6 @@ function getSellerDetails(value) {
     span#span_value {
         margin-top: -10px;
     }
-    input.form-control.text-center {
-    height: 4vh!important;
-    }
     <?php if ($pos_settings->display_qr_code_scanner) { ?>
     input#add_item {
     width: 148% !important;
@@ -240,6 +237,12 @@ function getSellerDetails(value) {
 
     #search_category {
         padding: 9px 12px 7px !important;
+    }
+    input.form-control.text-center{
+    height: 3vh!important;
+    }
+    .table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
+    padding: 8px!important;
     }
     </style>
     <?php }  ?>
