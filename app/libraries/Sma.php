@@ -3259,7 +3259,11 @@ class Sma {
                     $table_body = $table_body . '<td  style="text-align:right;">' . $this->custom_format($row->unit_price, $obj->format) . '</td>';
                 elseif ($data == 'real_unit_price'):
                     $table_body = $table_body . '<td >' . $this->custom_format(($row->real_unit_price + $VariantPrice), $obj->format) . '</td>';
-
+                elseif ($data == 'Article_Qty'):
+                    $table_body = $table_body . '<td >' . $this->custom_format(($row->article_qty), $obj->format) . '</td>';
+                elseif ($data == 'Making_charges'):
+                    $table_body = $table_body . '<td >' . $this->custom_format(($row->making_charges), $obj->format) . '</td>';
+    
 
                 elseif (!empty($obj->formula) && strpos($data, '|')):
                     $_data_arr = explode('|', $data);
@@ -3275,8 +3279,8 @@ class Sma {
                     $res = substr($res, 0, -1);
                     $table_body = $table_body . '<td>' . $res . '</td>';
                 else :
-
-                    $class = ( in_array($data, array('mrp', 'subtotal', 'unit_quantity','quantity', 'unit_price', 'real_unit_price', 'net_price', 'invoice_net_unit_price', 'invoice_total_net_unit_price', 'net_unit_price', 'item_tax', 'item_discount', 'saving_price'))) ? 'text-left' : '';
+                    
+                    $class = ( in_array($data, array('mrp', 'subtotal', 'unit_quantity','quantity', 'unit_price', 'real_unit_price', 'net_price', 'invoice_net_unit_price', 'invoice_total_net_unit_price', 'net_unit_price', 'item_tax', 'item_discount', 'saving_price', 'Article_Qty','Making_charges'))) ? 'text-left' : '';
                     $mrp_total = ($data == 'mrp' && !empty($row->$data)) ? $mrp_total + $row->$data : $mrp_total;
                     $net_total = ($data == 'real_unit_price' && !empty($row->$data)) ? $net_total + $row->$data : $net_total;
                     $unit_total = ($data == 'unit_price' && !empty($row->$data)) ? $unit_total + $row->$data : $unit_total;
@@ -3294,6 +3298,12 @@ class Sma {
                             $quantity_total += $row->quantity;
                         }
                     }
+                    // if ($data == 'Article_Qty') {
+                    //     $article_qty = $article_qty + ($row->article_qty);
+                    // }
+                    // if ($data == 'Making_charges') {
+                    //     $making_charges = $making_charges + ($row->making_charges);
+                    // }
 
                     if (!empty($obj->format)):
                         if ($data == 'real_unit_price') {
@@ -3454,7 +3464,7 @@ class Sma {
                         $table_body = $table_body . '<td>' . $res . '</td>';
                     else :
 
-                        $class = ( in_array($data, array('mrp', 'subtotal', 'unit_quantity', 'unit_price', 'real_unit_price', 'net_price', 'invoice_net_unit_price', 'invoice_total_net_unit_price', 'net_unit_price', 'item_tax', 'item_discount', 'saving_price'))) ? 'text-left' : '';
+                        $class = ( in_array($data, array('mrp', 'subtotal', 'unit_quantity', 'unit_price', 'real_unit_price', 'net_price', 'invoice_net_unit_price', 'invoice_total_net_unit_price', 'net_unit_price', 'item_tax', 'item_discount', 'saving_price', 'article_qty','making_charges'))) ? 'text-left' : '';
                         $mrp_total = ($data == 'mrp' && !empty($row->$data)) ? $mrp_total + $row->$data : $mrp_total;
                         $net_total = ($data == 'real_unit_price' && !empty($row->$data)) ? $net_total + $row->$data : $net_total;
                         $unit_total = ($data == 'unit_price' && !empty($row->$data)) ? $unit_total + $row->$data : $unit_total;
@@ -3607,6 +3617,12 @@ class Sma {
                         break;
                     case 'savings':
                         $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatMoney($saving) . '</th>';
+                        break;
+                    case 'Article_Qty':
+                        $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatQuantity($article_qty) . '</th>';
+                        break;
+                    case 'Making_charges':
+                        $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatQuantity($making_charges) . '</th>';
                         break;
                     default:
                         $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;"> </th>';
