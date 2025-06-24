@@ -118,7 +118,7 @@ $(document).ready(function () {
     $(document).on('click', '#updateOrderDiscount', function () {
         var ds = $('#order_discount_input').val() ? $('#order_discount_input').val() : '0';
         let Total = $('#gtotal').text();
-       
+
         // Trim and detect if discount is a percentage
         ds = ds.trim();
         let isPercentage = ds.slice(-1) === '%';
@@ -372,7 +372,7 @@ $(document).ready(function () {
             delete_items.push(positems[item_id]);
             delete positems[item_id];
             //console.log(positems);
-            var scanValue = $('#scan_item_qr').val(); 
+            var scanValue = $('#scan_item_qr').val();
             row.remove();
             if (positems.hasOwnProperty(item_id)) {
             } else {
@@ -392,12 +392,11 @@ $(document).ready(function () {
                 }
             }
         }
-        let itemsArray = JSON.parse(localStorage.getItem('positems'));  
-        var isValid1 = false; 
+        let itemsArray = JSON.parse(localStorage.getItem('positems'));
+        var isValid1 = false;
         // Loop through items
         var isExchange = localStorage.getItem("isExchange");
-        if(isExchange === "true" && itemsArray.length !==0)
-        {
+        if (isExchange === "true" && itemsArray.length !== 0) {
             for (let key in itemsArray) {
                 if (itemsArray.hasOwnProperty(key)) {
                     let item = itemsArray[key];
@@ -407,15 +406,15 @@ $(document).ready(function () {
                 }
             }
         }
-        if (itemsArray.length === 0) { 
-                isValid1 = false; 
-            }
+        if (itemsArray.length === 0) {
+            isValid1 = false;
+        }
         if (isExchange === "true" && isValid1 === true) {
-                $("#payment").prop("disabled", false);
-            }
-            else if(isExchange === "true" && isValid1 === false){
-                $("#payment").prop("disabled", true);
-            }
+            $("#payment").prop("disabled", false);
+        }
+        else if (isExchange === "true" && isValid1 === false) {
+            $("#payment").prop("disabled", true);
+        }
 
         return false;
     });
@@ -433,12 +432,12 @@ $(document).ready(function () {
         var product_option = row.children().children('.roption').val(),
             unit_price = formatDecimal(row.children().children('.ruprice').val()),
             discount = row.children().children('.rdiscount').val();
-            mrp = formatDecimal(row.children().children('.rmrp').val()),
+        mrp = formatDecimal(row.children().children('.rmrp').val()),
             discount_on_mrp = row.children().children('.rmrpdiscount').val();
-            customer_group_discount = row.children().children('.rcustomer_group_discount').val(); // flag for customer discount apply
+        customer_group_discount = row.children().children('.rcustomer_group_discount').val(); // flag for customer discount apply
         var description = row.children().children('.rdescription').val();
         var editpopup = row.children().children('.reditpopup').val();
-        
+
         var manualedit = (item.row.manualedit) ? item.row.manualedit : '';
 
         // if (item.options !== false) {
@@ -454,7 +453,7 @@ $(document).ready(function () {
         // if(discount){
         //     var unit_price = mrp ;
         // }
-        var net_price = unit_price ;
+        var net_price = unit_price;
         $('#prModalLabel').text(item.row.name + ' (' + item.row.code + ')');
         // if (site.settings.tax1) {
         //     $('#ptax').select2('val', item.row.tax_rate);
@@ -495,8 +494,8 @@ $(document).ready(function () {
         //     }
         // }
 
-        if(editpopup == 'edititems'){
-            if(discount_on_mrp){
+        if (editpopup == 'edititems') {
+            if (discount_on_mrp) {
                 var mds = discount_on_mrp;
                 if (mds.indexOf("%") !== -1) {
                     var mrpdiscount = mds.split("%");
@@ -508,40 +507,40 @@ $(document).ready(function () {
                 } else {
                     item_discount_on_mrp = parseFloat(mds);
                 }
-                net_price -= item_discount_on_mrp; 
-                unit_price -= item_discount_on_mrp; 
+                net_price -= item_discount_on_mrp;
+                unit_price -= item_discount_on_mrp;
             }
-        }else{
+        } else {
             // apply this condition for product has variant (to calculate variant level mrp discount)
-                // if(product_option!=0){
-                    if(discount_on_mrp){
-                        var mds = discount_on_mrp;
-                        if (mds.indexOf("%") !== -1) {
-                            var mrpdiscount = mds.split("%");
-                            if (!isNaN(mrpdiscount[0])) {
-                                item_discount_on_mrp = parseFloat(((mrp) * parseFloat(mrpdiscount[0])) / 100);
-                            } else {
-                                item_discount_on_mrp = parseFloat(mds);
-                            }
-                        } else {
-                            item_discount_on_mrp = parseFloat(mds);
-                        }
-                        net_price -= item_discount_on_mrp; 
-                        unit_price -= item_discount_on_mrp; 
-                    }
-                // }
-        }
-        if(manualedit == '1') {
             // if(product_option!=0){
-                net_price += item_discount_on_mrp; 
-                unit_price += item_discount_on_mrp; 
+            if (discount_on_mrp) {
+                var mds = discount_on_mrp;
+                if (mds.indexOf("%") !== -1) {
+                    var mrpdiscount = mds.split("%");
+                    if (!isNaN(mrpdiscount[0])) {
+                        item_discount_on_mrp = parseFloat(((mrp) * parseFloat(mrpdiscount[0])) / 100);
+                    } else {
+                        item_discount_on_mrp = parseFloat(mds);
+                    }
+                } else {
+                    item_discount_on_mrp = parseFloat(mds);
+                }
+                net_price -= item_discount_on_mrp;
+                unit_price -= item_discount_on_mrp;
+            }
+            // }
+        }
+        if (manualedit == '1') {
+            // if(product_option!=0){
+            net_price += item_discount_on_mrp;
+            unit_price += item_discount_on_mrp;
             // }
             var flat_discount = mrp - net_price;  // Calculate flat discount
-            discount_on_mrp = flat_discount.toFixed(0);  
+            discount_on_mrp = flat_discount.toFixed(0);
         }
 
         // calculate order discount on price
-        if(discount!='0%' && customer_group_discount == 0){
+        if (discount != '0%' && customer_group_discount == 0) {
             var mds = discount;
             var item_discount_on_price = 0;
             if (mds.indexOf("%") !== -1) {
@@ -555,8 +554,8 @@ $(document).ready(function () {
                 item_discount_on_price = parseFloat(mds);
             }
             item_discount_on_price = Math.round(item_discount_on_price); // id discount is in decimal then round off it
-            if(editpopup !== 'edititems'){
-                net_price -= item_discount_on_price; 
+            if (editpopup !== 'edititems') {
+                net_price -= item_discount_on_price;
                 unit_price -= item_discount_on_price;
             }
             var discount_on_mrp = parseFloat(mrp) - parseFloat(unit_price);
@@ -730,7 +729,7 @@ $(document).ready(function () {
                                                         pr_tax = exptax[0];
                                                         net_price = parseFloat(unit_price);
                                                     }
-                                                // } else if (unit_price >= categorytax.price) {
+                                                    // } else if (unit_price >= categorytax.price) {
                                                 } else {
                                                     var taxvalue = categorytax.taxratevalue;
                                                     var exptax = taxvalue.split("~");
@@ -738,7 +737,7 @@ $(document).ready(function () {
                                                     pr_tax_rate = formatDecimal(exptax[1]) + '%';
                                                     pr_tax = exptax[0];
                                                     net_price = parseFloat(unit_price);
-                                                    
+
 
                                                 }
 
@@ -760,8 +759,8 @@ $(document).ready(function () {
                                                         pr_tax = exptax[0];
                                                         net_price = parseFloat(unit_price);
                                                     }
-                                                // } else if (unit_price >= categorytax.price) {
-                                                } else  {
+                                                    // } else if (unit_price >= categorytax.price) {
+                                                } else {
 
                                                     var taxvalue = categorytax.taxratevalue;
                                                     var exptax = taxvalue.split("~");
@@ -896,7 +895,7 @@ $(document).ready(function () {
         //     }
         // } 
         // $('#mrpdiscount').val((discountPercentage) + '%');
-        
+
         $('#mrpdiscount').val((discount_on_mrp));
         $('#poptions-div').html(opt);
         $('#punits-div').html(uopt);
@@ -922,7 +921,7 @@ $(document).ready(function () {
     });
 
     $('#prModal').on('shown.bs.modal', function (e) {
-		$('#pmrp').focus();
+        $('#pmrp').focus();
         if ($('#poption').select2('val') != '') {
             $('#poption').select2('val', product_variant);
             product_variant = 0;
@@ -967,7 +966,7 @@ $(document).ready(function () {
         //Validate discount percentage
         if (mds.includes('%')) {
             let numericValue = parseFloat(mds.replace('%', ''));
-            
+
             if (numericValue > 100) {
                 alert("Discount cannot be more than 100%");
                 mds = '0%'; // Reset to 0%
@@ -980,10 +979,10 @@ $(document).ready(function () {
                 $('#mrpdiscount').val(mds); // Set the value to the field
                 $('#selling').val(formatDecimal(mrp)); // Reset selling price to MRP
             }
-            
+
         } else {
             let numericDiscount = parseFloat(mds);
-            
+
             // Check if discount is more than MRP or negative
             if (numericDiscount < 0) {
                 alert("Discount cannot be negative");
@@ -1021,9 +1020,9 @@ $(document).ready(function () {
             }
             mrp = unit_price; // for selling price on change event
             var pmrp = $('#pmrp').val();
-            if(unit_price > pmrp){
+            if (unit_price > pmrp) {
                 alert("Selling price cannot be greater than MRP")
-                $('#selling').val(formatDecimal(pmrp - item_discount_on_mrp)); 
+                $('#selling').val(formatDecimal(pmrp - item_discount_on_mrp));
                 return;
             }
         }
@@ -1055,171 +1054,92 @@ $(document).ready(function () {
         var pr_tax_val = 0, pr_tax_rate = 0;
 
         // if (pr_tax !== null && pr_tax != 0) {
-            // $.each(tax_rates, function () {
-            if (site.settings.tax1 == 1) {  
-                // if (this.id == pr_tax) {
-                if (pr_tax !== false) {
-                    if (pr_tax.type == 1) {
+        // $.each(tax_rates, function () {
+        if (site.settings.tax1 == 1) {
+            // if (this.id == pr_tax) {
+            if (pr_tax !== false) {
+                if (pr_tax.type == 1) {
 
-                        if (item_tax_method == 0) {
-                            if (item.fixtax) {
-                                var taxvalue = item.fixtax;
-                                var exptax = taxvalue.split("~");
-
-                                pr_tax_val = formatDecimal((((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1]))), 4);
-                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                pr_tax = exptax[0];
-                                mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
-                            } else {
-
-                                if (item.category_tax) {
-                                    $.each(item.category_tax, function (k, categorytax) {
-                                        var uptocheck = categorytax.upto;
-                                        if (categorytax.condition == "less_than" && mrp <= categorytax.price) {
-                            
-                                            if (uptocheck) {
-                                                if (categorytax.price >= mrp && mrp <= uptocheck) {
-                                                    var taxvalue = categorytax.taxratevalue;
-                                                    var exptax = taxvalue.split("~");
-                                                    pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1])), 6);
-                                                    pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                                    pr_tax = exptax[0];
-                                                    mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
-                                                } else if (mrp <= categorytax.price) {
-                                                    var taxvalue = categorytax.taxratevalue;
-                                                    var exptax = taxvalue.split("~");
-                                                    pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1])), 6);
-                                                    pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                                    pr_tax = exptax[0];
-                                                    mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
-                                                }
-                                            } else {
-                                                var taxvalue = categorytax.taxratevalue;
-                                                var exptax = taxvalue.split("~");
-                                                pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1])), 6);
-                                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                                pr_tax = exptax[0];
-                                                mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
-                                            }
-
-                                        } else if (categorytax.condition == "greater_than" && mrp >= categorytax.price) {
-                                            
-                                            if (uptocheck) {
-                                                if (categorytax.price >= mrp && mrp <= uptocheck) {
-                                                    var taxvalue = categorytax.taxratevalue;
-                                                    var exptax = taxvalue.split("~");
-                                                    pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1])), 6);
-                                                    pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                                    pr_tax = exptax[0];
-                                                    mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
-                                                } else {
-                                                    var taxvalue = categorytax.taxratevalue;
-                                                    var exptax = taxvalue.split("~");
-                                                    pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1])), 6);
-                                                    pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                                    pr_tax = exptax[0];
-                                                    mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
-                                                }
-                                            // } else if (mrp >= categorytax.price) {
-                                            } else {
-
-                                                var taxvalue = categorytax.taxratevalue;
-                                                var exptax = taxvalue.split("~");
-                                                pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1])), 6);
-                                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                                pr_tax = exptax[0];
-                                                mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                        } else {
-
-                            if (item.fixtax) {
-                                var taxvalue = item.fixtax;
-                                var exptax = taxvalue.split("~");
-                                pr_tax_val = formatDecimal((((mrp) * parseFloat(exptax[1])) / 100), 4);
-                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                pr_tax = exptax[0];
-                                mrp = parseFloat(mrp);
-                            } else {
-                                if (item.category_tax) {
-                                    $.each(item.category_tax, function (k, categorytax) {
-                                        var uptocheck = categorytax.upto;
-                                        if (categorytax.condition == "less_than" && mrp <= categorytax.price) {
-
-                                            if (uptocheck) {
-                                                if (categorytax.price >= mrp && mrp <= uptocheck) {
-                                                    var taxvalue = categorytax.taxratevalue;
-                                                    var exptax = taxvalue.split("~");
-                                                    pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100), 6);
-                                                    pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                                    pr_tax = exptax[0];
-                                                    mrp = parseFloat(mrp);
-                                                } else {
-                                                    var taxvalue = categorytax.taxratevalue;
-                                                    var exptax = taxvalue.split("~");
-                                                    pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100), 6);
-                                                    pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                                    pr_tax = exptax[0];
-                                                    mrp = parseFloat(mrp);
-                                                }
-                                            // } else if (mrp >= categorytax.price) {
-                                            } else {
-
-                                                var taxvalue = categorytax.taxratevalue;
-                                                var exptax = taxvalue.split("~");
-                                                pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100), 6);
-                                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                                pr_tax = exptax[0];
-                                                mrp = parseFloat(mrp);
-
-                                            }
-
-
-                                        } else if (categorytax.condition == "greater_than" && mrp >= categorytax.price) {
-
-                                            if (uptocheck) {
-                                                if (categorytax.price >= mrp && mrp <= uptocheck) {
-                                                    var taxvalue = categorytax.taxratevalue;
-                                                    var exptax = taxvalue.split("~");
-                                                    pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100), 6);
-                                                    pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                                    pr_tax = exptax[0];
-                                                    mrp = parseFloat(mrp);
-                                                } else {
-                                                    var taxvalue = categorytax.taxratevalue;
-                                                    var exptax = taxvalue.split("~");
-                                                    pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100), 6);
-                                                    pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                                    pr_tax = exptax[0];
-                                                    mrp = parseFloat(mrp);
-                                                }
-                                            // } else if (mrp >= categorytax.price) {
-                                            } else {
-
-                                                var taxvalue = categorytax.taxratevalue;
-                                                var exptax = taxvalue.split("~");
-                                                pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100), 6);
-                                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
-                                                pr_tax = exptax[0];
-                                                mrp = parseFloat(mrp);
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-
-                        }
-                    } else if (pr_tax.type == 2) {
-
+                    if (item_tax_method == 0) {
                         if (item.fixtax) {
                             var taxvalue = item.fixtax;
                             var exptax = taxvalue.split("~");
 
-                            pr_tax_val = parseFloat(exptax[1]);
-                            pr_tax_rate = exptax[1];
+                            pr_tax_val = formatDecimal((((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1]))), 4);
+                            pr_tax_rate = formatDecimal(exptax[1]) + '%';
+                            pr_tax = exptax[0];
+                            mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
+                        } else {
+
+                            if (item.category_tax) {
+                                $.each(item.category_tax, function (k, categorytax) {
+                                    var uptocheck = categorytax.upto;
+                                    if (categorytax.condition == "less_than" && mrp <= categorytax.price) {
+
+                                        if (uptocheck) {
+                                            if (categorytax.price >= mrp && mrp <= uptocheck) {
+                                                var taxvalue = categorytax.taxratevalue;
+                                                var exptax = taxvalue.split("~");
+                                                pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1])), 6);
+                                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
+                                                pr_tax = exptax[0];
+                                                mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
+                                            } else if (mrp <= categorytax.price) {
+                                                var taxvalue = categorytax.taxratevalue;
+                                                var exptax = taxvalue.split("~");
+                                                pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1])), 6);
+                                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
+                                                pr_tax = exptax[0];
+                                                mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
+                                            }
+                                        } else {
+                                            var taxvalue = categorytax.taxratevalue;
+                                            var exptax = taxvalue.split("~");
+                                            pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1])), 6);
+                                            pr_tax_rate = formatDecimal(exptax[1]) + '%';
+                                            pr_tax = exptax[0];
+                                            mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
+                                        }
+
+                                    } else if (categorytax.condition == "greater_than" && mrp >= categorytax.price) {
+
+                                        if (uptocheck) {
+                                            if (categorytax.price >= mrp && mrp <= uptocheck) {
+                                                var taxvalue = categorytax.taxratevalue;
+                                                var exptax = taxvalue.split("~");
+                                                pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1])), 6);
+                                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
+                                                pr_tax = exptax[0];
+                                                mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
+                                            } else {
+                                                var taxvalue = categorytax.taxratevalue;
+                                                var exptax = taxvalue.split("~");
+                                                pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1])), 6);
+                                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
+                                                pr_tax = exptax[0];
+                                                mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
+                                            }
+                                            // } else if (mrp >= categorytax.price) {
+                                        } else {
+
+                                            var taxvalue = categorytax.taxratevalue;
+                                            var exptax = taxvalue.split("~");
+                                            pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100 + parseFloat(exptax[1])), 6);
+                                            pr_tax_rate = formatDecimal(exptax[1]) + '%';
+                                            pr_tax = exptax[0];
+                                            mrp = parseFloat(mrp) - parseFloat(pr_tax_val);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    } else {
+
+                        if (item.fixtax) {
+                            var taxvalue = item.fixtax;
+                            var exptax = taxvalue.split("~");
+                            pr_tax_val = formatDecimal((((mrp) * parseFloat(exptax[1])) / 100), 4);
+                            pr_tax_rate = formatDecimal(exptax[1]) + '%';
                             pr_tax = exptax[0];
                             mrp = parseFloat(mrp);
                         } else {
@@ -1227,54 +1147,61 @@ $(document).ready(function () {
                                 $.each(item.category_tax, function (k, categorytax) {
                                     var uptocheck = categorytax.upto;
                                     if (categorytax.condition == "less_than" && mrp <= categorytax.price) {
+
                                         if (uptocheck) {
                                             if (categorytax.price >= mrp && mrp <= uptocheck) {
                                                 var taxvalue = categorytax.taxratevalue;
                                                 var exptax = taxvalue.split("~");
-                                                pr_tax_val = parseFloat(exptax[1])
-                                                pr_tax_rate = exptax[1];
+                                                pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100), 6);
+                                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
                                                 pr_tax = exptax[0];
                                                 mrp = parseFloat(mrp);
                                             } else {
                                                 var taxvalue = categorytax.taxratevalue;
                                                 var exptax = taxvalue.split("~");
-                                                pr_tax_val = parseFloat(exptax[1])
-                                                pr_tax_rate = exptax[1];
+                                                pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100), 6);
+                                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
                                                 pr_tax = exptax[0];
                                                 mrp = parseFloat(mrp);
                                             }
-                                        }
-                                        else {
+                                            // } else if (mrp >= categorytax.price) {
+                                        } else {
+
                                             var taxvalue = categorytax.taxratevalue;
                                             var exptax = taxvalue.split("~");
-                                            pr_tax_val = parseFloat(exptax[1])
-                                            pr_tax_rate = exptax[1];
+                                            pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100), 6);
+                                            pr_tax_rate = formatDecimal(exptax[1]) + '%';
                                             pr_tax = exptax[0];
                                             mrp = parseFloat(mrp);
+
                                         }
+
+
                                     } else if (categorytax.condition == "greater_than" && mrp >= categorytax.price) {
+
                                         if (uptocheck) {
                                             if (categorytax.price >= mrp && mrp <= uptocheck) {
                                                 var taxvalue = categorytax.taxratevalue;
                                                 var exptax = taxvalue.split("~");
-                                                pr_tax_val = parseFloat(exptax[1])
-                                                pr_tax_rate = exptax[1];
+                                                pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100), 6);
+                                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
                                                 pr_tax = exptax[0];
                                                 mrp = parseFloat(mrp);
                                             } else {
                                                 var taxvalue = categorytax.taxratevalue;
                                                 var exptax = taxvalue.split("~");
-                                                pr_tax_val = parseFloat(exptax[1])
-                                                pr_tax_rate = exptax[1];
+                                                pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100), 6);
+                                                pr_tax_rate = formatDecimal(exptax[1]) + '%';
                                                 pr_tax = exptax[0];
                                                 mrp = parseFloat(mrp);
                                             }
-                                        }
-                                        else {
+                                            // } else if (mrp >= categorytax.price) {
+                                        } else {
+
                                             var taxvalue = categorytax.taxratevalue;
                                             var exptax = taxvalue.split("~");
-                                            pr_tax_val = parseFloat(exptax[1])
-                                            pr_tax_rate = exptax[1];
+                                            pr_tax_val = formatDecimal(((mrp) * parseFloat(exptax[1])) / (100), 6);
+                                            pr_tax_rate = formatDecimal(exptax[1]) + '%';
                                             pr_tax = exptax[0];
                                             mrp = parseFloat(mrp);
                                         }
@@ -1284,14 +1211,86 @@ $(document).ready(function () {
                         }
 
                     }
+                } else if (pr_tax.type == 2) {
+
+                    if (item.fixtax) {
+                        var taxvalue = item.fixtax;
+                        var exptax = taxvalue.split("~");
+
+                        pr_tax_val = parseFloat(exptax[1]);
+                        pr_tax_rate = exptax[1];
+                        pr_tax = exptax[0];
+                        mrp = parseFloat(mrp);
+                    } else {
+                        if (item.category_tax) {
+                            $.each(item.category_tax, function (k, categorytax) {
+                                var uptocheck = categorytax.upto;
+                                if (categorytax.condition == "less_than" && mrp <= categorytax.price) {
+                                    if (uptocheck) {
+                                        if (categorytax.price >= mrp && mrp <= uptocheck) {
+                                            var taxvalue = categorytax.taxratevalue;
+                                            var exptax = taxvalue.split("~");
+                                            pr_tax_val = parseFloat(exptax[1])
+                                            pr_tax_rate = exptax[1];
+                                            pr_tax = exptax[0];
+                                            mrp = parseFloat(mrp);
+                                        } else {
+                                            var taxvalue = categorytax.taxratevalue;
+                                            var exptax = taxvalue.split("~");
+                                            pr_tax_val = parseFloat(exptax[1])
+                                            pr_tax_rate = exptax[1];
+                                            pr_tax = exptax[0];
+                                            mrp = parseFloat(mrp);
+                                        }
+                                    }
+                                    else {
+                                        var taxvalue = categorytax.taxratevalue;
+                                        var exptax = taxvalue.split("~");
+                                        pr_tax_val = parseFloat(exptax[1])
+                                        pr_tax_rate = exptax[1];
+                                        pr_tax = exptax[0];
+                                        mrp = parseFloat(mrp);
+                                    }
+                                } else if (categorytax.condition == "greater_than" && mrp >= categorytax.price) {
+                                    if (uptocheck) {
+                                        if (categorytax.price >= mrp && mrp <= uptocheck) {
+                                            var taxvalue = categorytax.taxratevalue;
+                                            var exptax = taxvalue.split("~");
+                                            pr_tax_val = parseFloat(exptax[1])
+                                            pr_tax_rate = exptax[1];
+                                            pr_tax = exptax[0];
+                                            mrp = parseFloat(mrp);
+                                        } else {
+                                            var taxvalue = categorytax.taxratevalue;
+                                            var exptax = taxvalue.split("~");
+                                            pr_tax_val = parseFloat(exptax[1])
+                                            pr_tax_rate = exptax[1];
+                                            pr_tax = exptax[0];
+                                            mrp = parseFloat(mrp);
+                                        }
+                                    }
+                                    else {
+                                        var taxvalue = categorytax.taxratevalue;
+                                        var exptax = taxvalue.split("~");
+                                        pr_tax_val = parseFloat(exptax[1])
+                                        pr_tax_rate = exptax[1];
+                                        pr_tax = exptax[0];
+                                        mrp = parseFloat(mrp);
+                                    }
+                                }
+                            });
+                        }
+                    }
+
                 }
             }
-            // });
+        }
+        // });
         // }
         // var discount_mrp = (orignal_mrp - mrp);
         // var discount_percentage = (discount_mrp / original_mrp) * 100;
         // var netPrice = $('#net_price').text(); // Get net unit price from the span
-       
+
         $('#selling').val(formatDecimal(mrp)); // Set it to the selling price input
         $('#net_price').text(formatMoney(mrp));
         $('#pro_tax').text(formatMoney(pr_tax_val));
@@ -1303,12 +1302,12 @@ $(document).ready(function () {
             var selling_price = parseFloat(unit_price) + parseFloat(pr_tax_val);
 
             if (mrp > 0) {
-                
+
                 var discount = parseFloat(mrp) - parseFloat(unit_price);
-                if(item_tax_method == '0'){
+                if (item_tax_method == '0') {
                     var discount = parseFloat(mrp) - parseFloat(selling_price);
                 }
-                if(unit_price == 0){
+                if (unit_price == 0) {
                     discount = 0;
                 }
             }
@@ -1317,7 +1316,7 @@ $(document).ready(function () {
             }
             $('#selling').val(formatDecimal(unit_price)); // Set it to the selling price input
             $('#mrpdiscount').val(parseFloat(discount));
-        }else{
+        } else {
             // CalcualteDiscountOnMrp();
             var unit_price = parseFloat($('#selling').val());
             $('#selling').val(formatDecimal(unit_price)); // Set it to the selling price input
@@ -1330,7 +1329,7 @@ $(document).ready(function () {
     //     var unit_price = parseFloat($('#selling').val());
     //     var pr_tax_val = parseFloat($('#pro_tax').text());
     //     // var selling_price = parseFloat(unit_price) + parseFloat(pr_tax_val);
-        
+
     //     // if (mrp > 0) {
     //     //     var discount = mrp - selling_price;
     //     //     console.log(Math.abs(discount)); // Use console instead of alert
@@ -1438,7 +1437,7 @@ $(document).ready(function () {
     /* -----------------------
      * Edit Row Method
      ----------------------- */
-     $(document).on('click', '#editItem', function () {
+    $(document).on('click', '#editItem', function () {
 
         var row = $('#' + $('#row_id').val());
         var item_id = row.attr('data-item-id'), new_pr_tax = $('#ptax').val(), new_pr_tax_rate = false;
@@ -1497,7 +1496,7 @@ $(document).ready(function () {
             positems[item_id].row.real_unit_price = (parseFloat(price) + parseFloat(opt_price)),
             positems[item_id].row.unit_price = unit_price,
             positems[item_id].row.unit = unit,
-			positems[item_id].row.editpopup = 'edititems',
+            positems[item_id].row.editpopup = 'edititems',
             positems[item_id].row.sale_unit = unit,
             positems[item_id].row.tax_rate = new_pr_tax,
             positems[item_id].tax_rate = new_pr_tax_rate,
@@ -1505,9 +1504,9 @@ $(document).ready(function () {
             positems[item_id].row.description = $('#pdescription').val() ? $('#pdescription').val() : '',
             positems[item_id].row.option = $('#poption').val() ? $('#poption').val() : '',
             positems[item_id].row.serial = $('#pserial').val();
-            positems[item_id].row.discount_on_mrp = $('#mrpdiscount').val() ? $('#mrpdiscount').val() : '0%',
+        positems[item_id].row.discount_on_mrp = $('#mrpdiscount').val() ? $('#mrpdiscount').val() : '0%',
             positems[item_id].row.mrp = $('#pmrp').val() ? $('#pmrp').val() : '';
-           
+
 
         //check if option is changed ot not
         //edited by sunny
@@ -1519,9 +1518,9 @@ $(document).ready(function () {
         $('#prModal').modal('hide');
         var scanValue = $('#scan_item_qr').val();
         if (scanValue) {
-            scanItemAddToCart(Item); 
+            scanItemAddToCart(Item);
         } else {
-            add_invoice_item(Item); 
+            add_invoice_item(Item);
         }
         // add_invoice_item(Item);
         // loadItems();
@@ -1794,22 +1793,22 @@ $(document).ready(function () {
 
         var new_price = parseFloat($(this).val().replace(/,/g, '')),
             item_id = row.attr('data-item-id');
-            mrp = formatDecimal(row.children().children('.rmrp').val());
+        mrp = formatDecimal(row.children().children('.rmrp').val());
 
 
         if (new_price < 0) {
-        alert("Price cannot be negative.");
-        $(this).val(old_price); 
-        return;
+            alert("Price cannot be negative.");
+            $(this).val(old_price);
+            return;
         }
 
         var rowid = $('#item_' + item_id).val();
-        if(new_price > mrp){
+        if (new_price > mrp) {
             alert("Price should not be greater than the product MRP.");
-            new_price= mrp;
-        }else{
+            new_price = mrp;
+        } else {
             new_price = parseFloat($(this).val());
-        } 
+        }
 
         /*
          * Manage Item Quantity if change product price
@@ -1846,7 +1845,7 @@ $(document).ready(function () {
         var scanValue = $('#scan_item_qr').val();
         if (scanValue) {
             ItemAddtoCart();
-        }else{
+        } else {
             loadItems();
         }
         // loadItems();
@@ -2011,7 +2010,7 @@ function ItemAddtoCart() {
 
         //        console.log('--------------sortedItems---------------------');
         //        console.log(sortedItems);
-       
+
         $.each(sortedItems, function () {
 
             var item = this;
@@ -2027,17 +2026,17 @@ function ItemAddtoCart() {
             var product_id = item.row.id, item_type = item.row.type, combo_items = item.combo_items, item_price = item.row.price, item_qty = item.row.qty, item_aqty = item.row.quantity, item_tax_method = item.row.tax_method, item_ds = item.row.discount, item_discount = 0, item_desc = item.row.description, item_option = item.row.option, item_code = item.row.code, item_article_code = item.row.article_code, item_serial = item.row.serial, item_name = item.row.name.replace(/"/g, "&#034;").replace(/'/g, "&#039;");
             var product_unit = item.row.unit;
             var item_weight = 0;
-            if(item.row.storage_type == 'loose'){
-                var base_quantity = formatDecimal((parseFloat(item.row.base_quantity) * parseFloat(item.row.qty)),3);
-            }else{
-                var base_quantity = formatDecimal((parseFloat(item.row.qty)),3);
+            if (item.row.storage_type == 'loose') {
+                var base_quantity = formatDecimal((parseFloat(item.row.base_quantity) * parseFloat(item.row.qty)), 3);
+            } else {
+                var base_quantity = formatDecimal((parseFloat(item.row.qty)), 3);
             }
             var tax_rate = item.row.tax_rate;
             var mrp = item.row.mrp;
             var discount_on_mrp = item.row.discount_on_mrp;
             var pr_var_discount = item.row.pr_var_discount;
             var customer_group_discount = item.row.customer_group_discount; // flag for customer discount apply
-            
+
             // Category Tax
             var category_tax = item.category_tax;
             var fixtax = item.fixtax;
@@ -2045,7 +2044,7 @@ function ItemAddtoCart() {
             var warehouse_price_group_id = item.row.warehouse_price_group_id;
             if (!warehouse_price_group_id) {
                 var unit_price = parseFloat(item.row.real_unit_price) > 0 ? item.row.real_unit_price : item.row.unit_price;
-                if(scanValue){
+                if (scanValue) {
                     var unit_price = item.row.mrp;
                 }
             } else {
@@ -2156,7 +2155,7 @@ function ItemAddtoCart() {
                 }
                 unit_price = formatDecimal(mrp - item_discount_on_mrp, 6);
                 // end
-              
+
 
                 if (ods.indexOf("%") !== -1) {
                     var pds = ods.split("%");
@@ -2204,12 +2203,12 @@ function ItemAddtoCart() {
                 //Item Level Discount Calculations  
                 // var ds = item_ds ? String(item_ds) : '0';
 
-                if(manualedit == "1"){
+                if (manualedit == "1") {
                     var flat_discount = mrp - unit_price;  // Calculate flat discount
-                    item_discount = flat_discount.toFixed(0);  
+                    item_discount = flat_discount.toFixed(0);
                     discount_on_mrp = item_discount;
-                }else{
-                    if(customer_group_discount == '1'){ // override customer discount to discount on mrp if customer discount applied
+                } else {
+                    if (customer_group_discount == '1') { // override customer discount to discount on mrp if customer discount applied
                         discount_on_mrp = item_ds;
                     }
                     var ds = discount_on_mrp ? String(discount_on_mrp) : '0';
@@ -2227,19 +2226,19 @@ function ItemAddtoCart() {
 
             }
 
-            if(item.row.editpopup == 'edititems') {
-                
+            if (item.row.editpopup == 'edititems') {
+
                 unit_price = manualedit == "1" ? item.row.unit_price : mrp;
 
-                if(manualedit == "1"){
+                if (manualedit == "1") {
                     var flat_discount = mrp - unit_price;  // Calculate flat discount
-                    item_discount = flat_discount.toFixed(0);  
-                }else{
-                    if(customer_group_discount == '1'){ // override customer discount to discount on mrp if customer discount applied
+                    item_discount = flat_discount.toFixed(0);
+                } else {
+                    if (customer_group_discount == '1') { // override customer discount to discount on mrp if customer discount applied
                         discount_on_mrp = item.row.discount_on_mrp;
                     }
                     // Discount on mrp
-                    if(discount_on_mrp){
+                    if (discount_on_mrp) {
                         // item_ds = discount_on_mrp;
                         //Item Level Discount Calculations  
                         var ds = discount_on_mrp ? String(discount_on_mrp) : '0';
@@ -2254,16 +2253,16 @@ function ItemAddtoCart() {
                         } else {
                             item_discount = formatDecimal(ds, 6);
                         }
-                    } 
+                    }
                 }
-                
+
             }
-            
-           if(posdiscount){
+
+            if (posdiscount) {
                 product_discount += formatDecimal((item_discount_on_mrp * item_qty), 6);
-           }else{
+            } else {
                 product_discount += formatDecimal((item_discount * item_qty), 6);
-           }
+            }
 
             // item.row.discount = formatDecimal(item_discount, 4);
             if (changeQtyAsPerPrice) {
@@ -2271,10 +2270,10 @@ function ItemAddtoCart() {
             }
 
             // unit_price = formatDecimal(unit_price - item_discount, 6);
-            if(manualedit == ''){
+            if (manualedit == '') {
                 unit_price = formatDecimal(unit_price - item_discount, 6);
             }
-            if(posdiscount){ // for calculate unit_price after apply order level discount
+            if (posdiscount) { // for calculate unit_price after apply order level discount
                 unit_price = formatDecimal(unit_price - item_order_discount, 6);
             }
 
@@ -2498,12 +2497,12 @@ function ItemAddtoCart() {
             // if(item.row.editpopup == 'edititems') {
             //     unit_price = item_tax_method == 0 ? formatDecimal((parseFloat(unit_price)), 4) : formatDecimal((parseFloat(unit_price)), 4);
             // }
-            if(posdiscount){ // for adding order level discount in price again
+            if (posdiscount) { // for adding order level discount in price again
                 unit_price = formatDecimal((unit_price), 6) + formatDecimal((item_order_discount), 6);
             }
             item_price = item_tax_method == 0 ? formatDecimal((unit_price - pr_tax_val), 6) : formatDecimal(unit_price, 6);
             // unit_price = formatDecimal((unit_price), 6) + formatDecimal((item_discount), 6);
-            if(manualedit == ''){
+            if (manualedit == '') {
                 unit_price = formatDecimal((unit_price), 6) + formatDecimal((item_discount), 6);
             }
             /********************************************/
@@ -2549,15 +2548,15 @@ function ItemAddtoCart() {
             var productCodes = pos_settings.hideProductsCode === '1' ? item_code + ' - ' : '';
             // tr_html += '<span class="sname" id="name_' + row_no + '">' + item_code + ' - ' + item_name + (sel_opt ? ' (' + sel_opt + (item.note ? ': ' + item.note : '') + ')' : '') + '</span>';
             tr_html += '<i class="pull-right fa fa-edit tip pointer edit iconsize" id="' + row_no + '" data-item="' + item_id + '" title="Edit" style="cursor:pointer;"></i>';
-            tr_html += '<td>';  
-            tr_html += '<span class="sname" id="name_' + row_no + '">' + productCodes  + item_name + (sel_opt ? ' (' + sel_opt + (item.note ? ': ' + item.note : '') + ')' : '') + '</span>';
-            tr_html += '</td>'; 
+            tr_html += '<td>';
+            tr_html += '<span class="sname" id="name_' + row_no + '">' + productCodes + item_name + (sel_opt ? ' (' + sel_opt + (item.note ? ': ' + item.note : '') + ')' : '') + '</span>';
+            tr_html += '</td>';
             if (item.note == 'Free Items') {
                 var item_disabled = ' readonly="readonly" ';
-                tr_html += '</td>';    
+                tr_html += '</td>';
             } else {
                 var item_disabled = '';
-                tr_html += '</td>'; 
+                tr_html += '</td>';
                 // tr_html += '<td>';  
                 // tr_html += '<i class="pull-right fa fa-edit tip pointer edit iconsize" id="' + row_no + '" data-item="' + item_id + '" title="Edit" style="cursor:pointer;"></i>';
                 // tr_html += '</td>';  
@@ -2583,7 +2582,7 @@ function ItemAddtoCart() {
             if (site.settings.product_discount == 1) {
                 tr_html += '<input class="form-control input-sm rdiscount product_discount" name="product_discount[]" type="hidden" id="discount_' + row_no + '" value="' + item_ds + '">';
             }
-           
+
             if (site.settings.tax1 == 1) {
                 pr_tax.id = (tax_rate > 0) ? tax_rate : pr_tax.id;
                 tr_html += '<input class="form-control input-sm text-right rproduct_tax product_tax" name="product_tax[]" type="hidden" id="product_tax_' + row_no + '" value="' + pr_tax.id + '"><input type="hidden" class="sproduct_tax" id="sproduct_tax_' + row_no + '" value="' + formatMoney(pr_tax_val * item_qty) + '">';
@@ -2596,10 +2595,10 @@ function ItemAddtoCart() {
             tr_html += '<input class="rmrp mrp" name="mrp[]" type="hidden" value="' + mrp + '">';
             tr_html += '<input class="rmrpdiscount mrpdiscount" name="discount_on_mrp[]" type="hidden" value="' + discount_on_mrp + '">';
             tr_html += '<input class="rtaxrate rtaxrate" name="taxrate[]" type="hidden" value="' + tax_rate + '">';
-            tr_html += '<input class="reditpopup reditpopup" name="editpopup[]" type="hidden" value="' +  item.row.editpopup + '">';
-            tr_html += '<input class="rcustomer_group_discount rcustomer_group_discount" name="customer_group_discount[]" type="hidden" value="' +  customer_group_discount + '">';
+            tr_html += '<input class="reditpopup reditpopup" name="editpopup[]" type="hidden" value="' + item.row.editpopup + '">';
+            tr_html += '<input class="rcustomer_group_discount rcustomer_group_discount" name="customer_group_discount[]" type="hidden" value="' + customer_group_discount + '">';
 
-           
+
             // var cart_item_price =  (add_tax_in_cart_unit_price == true) ? (parseFloat(item_price) + parseFloat(pr_tax_val)) : parseFloat(item_price);
             //alert(cart_item_price);
 
@@ -2611,9 +2610,9 @@ function ItemAddtoCart() {
                 cart_item_price = parseFloat(item_price) + parseFloat(pr_tax_val);
             } else if (add_discount_in_cart_unit_price == true) {
                 cart_item_price = parseFloat(item_price) + parseFloat(item_discount);
-            }else if (add_tax_in_cart_unit_price == false) {
+            } else if (add_tax_in_cart_unit_price == false) {
                 cart_item_price = parseFloat(item_price);
-            }else {
+            } else {
                 cart_item_price = parseFloat(item_price) + parseFloat(pr_tax_val);
             }
 
@@ -2711,7 +2710,7 @@ function ItemAddtoCart() {
                 if (changeQtyAsPerPrice == true && item.row.storage_type == 'loose' && cart_user_price > 0) {
                     tr_html += '<td class="text-right"><span class="text-right ssubtotal returntotal returnsubtotal" id="subtotal_' + row_no + '">' + formatMoney(cart_user_price) + '</span></td>';
                     tr_html += '<input class="returntotal returnsubtotal"  type="hidden" value="' + formatMoney(cart_user_price) + '">';
-               
+
                 } else {
                     tr_html += '<input class="returntotal returnsubtotal"  type="hidden" value="' + formatMoney(parseFloat(cart_item_price) * parseFloat(item_qty)) + '">';
                     tr_html += '<td class="text-right" style="font-size: 13px;"><span class="text-right ssubtotal returntotal returnsubtotal" id="subtotal_' + row_no + '">' + formatMoney(parseFloat(cart_item_price) * parseFloat(item_qty)) + '</span></td>';
@@ -2868,7 +2867,7 @@ function ItemAddtoCart() {
         $('#tds').text(formatMoney(product_discount + order_discount));
         if (site.settings.tax2 != 0) {
             $('#ttax2').text('(' + formatMoney(product_tax) + ') ' + formatMoney(invoice_tax))
-        }else{
+        } else {
             $('#ttax2').text('(' + formatMoney(product_tax) + ') ')
         }
         $('#gtotal').text(formatMoney(gtotal));
@@ -2929,8 +2928,7 @@ function ItemAddtoCart() {
     var customerName = document.getElementById('customer_name').value;
     // Loop through items
     var isExchange = localStorage.getItem("isExchange");
-    if(isExchange === true)
-    {
+    if (isExchange === true) {
         exchangeOperation(isExchange);
     }
 }
@@ -2957,7 +2955,7 @@ function scanItemAddToCart(items) {
         }
     }
     items.forEach(item => {
-       
+
         if (item == null) return;
         var suspend_qty = item.row.qty;
         var item_id = site.settings.item_addition == 1 ? item.item_id : item.id;
@@ -2988,8 +2986,7 @@ function scanItemAddToCart(items) {
  * ----------------------- */
 
 //localStorage.clear();
-if($('#scan_item_qr').val())
-{
+if ($('#scan_item_qr').val()) {
     loadItems();
 }
 function loadItems() {
@@ -3165,18 +3162,21 @@ function loadItems() {
             var product_id = item.row.id, item_type = item.row.type, combo_items = item.combo_items, item_price = item.row.price, item_qty = item.row.qty, item_aqty = item.row.quantity, item_tax_method = item.row.tax_method, item_ds = item.row.discount, item_discount = 0, item_desc = item.row.description, item_option = item.row.option, item_code = item.row.code, item_article_code = item.row.article_code, item_serial = item.row.serial, item_name = item.row.name.replace(/"/g, "&#034;").replace(/'/g, "&#039;");
             var product_unit = item.row.unit;
             var item_weight = 0;
-            if(item.row.storage_type == 'loose'){
-                var base_quantity = formatDecimal((parseFloat(item.row.base_quantity) * parseFloat(item.row.qty)),3);
-            }else{
-                var base_quantity = formatDecimal((parseFloat(item.row.qty)),3);
+            if (item.row.storage_type == 'loose') {
+                var base_quantity = formatDecimal((parseFloat(item.row.base_quantity) * parseFloat(item.row.qty)), 3);
+            } else {
+                var base_quantity = formatDecimal((parseFloat(item.row.qty)), 3);
             }
             var tax_rate = item.row.tax_rate;
-            var item_master_qty = item.row.item_master_qty;
+            var item_master_qty = item.row.item_master_qty >= 0 ? item.row.item_master_qty : 1;
             var mrp = item.row.mrp;
+            var making_charges_rate = item.row.making_charges_rate >= 0 ? (item.row.making_charges_rate * item_qty) : 0.00;
+            var rate = item.row.rate >= 0 ? (item.row.rate * item_qty) : item_price;
+
             var discount_on_mrp = item.row.discount_on_mrp;
             var pr_var_discount = item.row.pr_var_discount;
             var customer_group_discount = item.row.customer_group_discount; // flag for customer discount apply
-            
+
             // Category Tax
             var category_tax = item.category_tax;
             var fixtax = item.fixtax;
@@ -3184,7 +3184,7 @@ function loadItems() {
             var warehouse_price_group_id = item.row.warehouse_price_group_id;
             if (!warehouse_price_group_id) {
                 var unit_price = parseFloat(item.row.real_unit_price) > 0 ? item.row.real_unit_price : item.row.unit_price;
-                if(scanValue){
+                if (scanValue) {
                     var unit_price = item.row.mrp;
                 }
             } else {
@@ -3268,7 +3268,7 @@ function loadItems() {
                     });
                 }
             }
-          
+
 
             // Order level discount distributed in each items as item discount.
             var posdiscount = localStorage.getItem('posdiscount');
@@ -3295,7 +3295,7 @@ function loadItems() {
                 }
                 unit_price = formatDecimal(mrp - item_discount_on_mrp, 6);
                 // end
-              
+
 
                 if (ods.indexOf("%") !== -1) {
                     var pds = ods.split("%");
@@ -3343,12 +3343,12 @@ function loadItems() {
                 //Item Level Discount Calculations  
                 // var ds = item_ds ? String(item_ds) : '0';
 
-                if(manualedit == "1"){
+                if (manualedit == "1") {
                     var flat_discount = mrp - unit_price;  // Calculate flat discount
-                    item_discount = flat_discount.toFixed(0);  
+                    item_discount = flat_discount.toFixed(0);
                     discount_on_mrp = item_discount;
-                }else{
-                    if(customer_group_discount == '1'){ // override customer discount to discount on mrp if customer discount applied
+                } else {
+                    if (customer_group_discount == '1') { // override customer discount to discount on mrp if customer discount applied
                         discount_on_mrp = item_ds;
                     }
                     var ds = discount_on_mrp ? String(discount_on_mrp) : '0';
@@ -3366,19 +3366,19 @@ function loadItems() {
 
             }
 
-            if(item.row.editpopup == 'edititems') {
-                
+            if (item.row.editpopup == 'edititems') {
+
                 unit_price = manualedit == "1" ? item.row.unit_price : mrp;
 
-                if(manualedit == "1"){
+                if (manualedit == "1") {
                     var flat_discount = mrp - unit_price;  // Calculate flat discount
-                    item_discount = flat_discount.toFixed(0);  
-                }else{
-                    if(customer_group_discount == '1'){ // override customer discount to discount on mrp if customer discount applied
+                    item_discount = flat_discount.toFixed(0);
+                } else {
+                    if (customer_group_discount == '1') { // override customer discount to discount on mrp if customer discount applied
                         discount_on_mrp = item.row.discount_on_mrp;
                     }
                     // Discount on mrp
-                    if(discount_on_mrp){
+                    if (discount_on_mrp) {
                         // item_ds = discount_on_mrp;
                         //Item Level Discount Calculations  
                         var ds = discount_on_mrp ? String(discount_on_mrp) : '0';
@@ -3393,16 +3393,16 @@ function loadItems() {
                         } else {
                             item_discount = formatDecimal(ds, 6);
                         }
-                    } 
+                    }
                 }
-                
+
             }
-            
-           if(posdiscount){
+
+            if (posdiscount) {
                 product_discount += formatDecimal((item_discount_on_mrp * item_qty), 6);
-           }else{
+            } else {
                 product_discount += formatDecimal((item_discount * item_qty), 6);
-           }
+            }
 
             // item.row.discount = formatDecimal(item_discount, 4);
             if (changeQtyAsPerPrice) {
@@ -3410,10 +3410,10 @@ function loadItems() {
             }
 
             // unit_price = formatDecimal(unit_price - item_discount, 6);
-            if(manualedit == ''){
+            if (manualedit == '') {
                 unit_price = formatDecimal(unit_price - item_discount, 6);
             }
-            if(posdiscount){ // for calculate unit_price after apply order level discount
+            if (posdiscount) { // for calculate unit_price after apply order level discount
                 unit_price = formatDecimal(unit_price - item_order_discount, 6);
             }
 
@@ -3637,12 +3637,12 @@ function loadItems() {
             // if(item.row.editpopup == 'edititems') {
             //     unit_price = item_tax_method == 0 ? formatDecimal((parseFloat(unit_price)), 4) : formatDecimal((parseFloat(unit_price)), 4);
             // }
-            if(posdiscount){ // for adding order level discount in price again
+            if (posdiscount) { // for adding order level discount in price again
                 unit_price = formatDecimal((unit_price), 6) + formatDecimal((item_order_discount), 6);
             }
             item_price = item_tax_method == 0 ? formatDecimal((unit_price - pr_tax_val), 6) : formatDecimal(unit_price, 6);
             // unit_price = formatDecimal((unit_price), 6) + formatDecimal((item_discount), 6);
-            if(manualedit == ''){
+            if (manualedit == '') {
                 unit_price = formatDecimal((unit_price), 6) + formatDecimal((item_discount), 6);
             }
             /********************************************/
@@ -3690,20 +3690,19 @@ function loadItems() {
             // tr_html += '<span class="sname" id="name_' + row_no + '">' + item_code + ' - ' + item_name + (sel_opt ? ' (' + sel_opt + (item.note ? ': ' + item.note : '') + ')' : '') + '</span>';
             // tr_html += '<i class="pull-right fa fa-edit tip pointer edit iconsize" id="' + row_no + '" data-item="' + item_id + '" title="Edit" style="cursor:pointer;"></i>';
             // tr_html += '<td>';  
-            tr_html += '<span class="sname" id="name_' + row_no + '">' + productCodes  + item_name + (sel_opt ? ' (' + sel_opt + (item.note ? ': ' + item.note : '') + ')' : '') + '</span>';
-            tr_html += '</td>'; 
+            tr_html += '<span class="sname" id="name_' + row_no + '">' + productCodes + item_name + (sel_opt ? ' (' + sel_opt + (item.note ? ': ' + item.note : '') + ')' : '') + '</span>';
+            tr_html += '</td>';
             if (item.note == 'Free Items') {
                 var item_disabled = ' readonly="readonly" ';
-                tr_html += '</td>';  
+                tr_html += '</td>';
             } else {
                 var item_disabled = '';
-                tr_html += '</td>'; 
+                tr_html += '</td>';
                 // tr_html += '<td>';  
                 // tr_html += '<i class="pull-right fa fa-edit tip pointer edit iconsize" id="' + row_no + '" data-item="' + item_id + '" title="Edit" style="cursor:pointer;"></i>';
                 // tr_html += '</td>';  
 
             }
-            
             //tr_html += '<i class="pull-right fa fa-edit tip pointer edit" id="' + row_no + '" data-item="' + item_id + '" title="Edit" style="cursor:pointer;"></i></td>';
             item.note = (item.note == undefined) ? '' : item.note;
             tr_html += '<input name="item_note[]" type="hidden" class="rid" value="' + item.note + '">';
@@ -3723,7 +3722,7 @@ function loadItems() {
             if (site.settings.product_discount == 1) {
                 tr_html += '<input class="form-control input-sm rdiscount product_discount" name="product_discount[]" type="hidden" id="discount_' + row_no + '" value="' + item_ds + '">';
             }
-           
+
             if (site.settings.tax1 == 1) {
                 pr_tax.id = (tax_rate > 0) ? tax_rate : pr_tax.id;
                 tr_html += '<input class="form-control input-sm text-right rproduct_tax product_tax" name="product_tax[]" type="hidden" id="product_tax_' + row_no + '" value="' + pr_tax.id + '"><input type="hidden" class="sproduct_tax" id="sproduct_tax_' + row_no + '" value="' + formatMoney(pr_tax_val * item_qty) + '">';
@@ -3736,37 +3735,37 @@ function loadItems() {
             tr_html += '<input class="rmrp mrp" name="mrp[]" type="hidden" value="' + mrp + '">';
             tr_html += '<input class="rmrpdiscount mrpdiscount" name="discount_on_mrp[]" type="hidden" value="' + discount_on_mrp + '">';
             tr_html += '<input class="rtaxrate rtaxrate" name="taxrate[]" type="hidden" value="' + tax_rate + '">';
-            tr_html += '<input class="reditpopup reditpopup" name="editpopup[]" type="hidden" value="' +  item.row.editpopup + '">';
-            tr_html += '<input class="rcustomer_group_discount rcustomer_group_discount" name="customer_group_discount[]" type="hidden" value="' +  customer_group_discount + '">';
+            tr_html += '<input class="reditpopup reditpopup" name="editpopup[]" type="hidden" value="' + item.row.editpopup + '">';
+            tr_html += '<input class="rcustomer_group_discount rcustomer_group_discount" name="customer_group_discount[]" type="hidden" value="' + customer_group_discount + '">';
 
-           
+
             // var cart_item_price =  (add_tax_in_cart_unit_price == true) ? (parseFloat(item_price) + parseFloat(pr_tax_val)) : parseFloat(item_price);
             //alert(cart_item_price);
 
             var cart_item_price = 0;
 
             if (add_tax_in_cart_unit_price == true && add_discount_in_cart_unit_price == true) {
-                
+
                 cart_item_price = parseFloat(item_price) + parseFloat(pr_tax_val) + parseFloat(item_discount); //item_ds
             } else if (add_tax_in_cart_unit_price == true) {
                 cart_item_price = parseFloat(item_price) + parseFloat(pr_tax_val);
             } else if (add_discount_in_cart_unit_price == true) {
                 cart_item_price = parseFloat(item_price) + parseFloat(item_discount);
-            }else if (add_tax_in_cart_unit_price == false) {
+            } else if (add_tax_in_cart_unit_price == false) {
                 cart_item_price = parseFloat(item_price);
-            }else {
+            } else {
                 cart_item_price = parseFloat(item_price) + parseFloat(pr_tax_val);
             }
 
-             
 
             if (permission_admin || permission_owner || per_cartpriceedit) {
                 if (changeQtyAsPerPrice == true && item.row.storage_type == 'loose') {
-                    tr_html += '<input type="text" maxlength="10" name="item_user_price[]" id="suserprice_' + row_no + '" value="' + ((cart_user_price > 0) ? parseInt(cart_user_price) : parseInt(cart_item_price)) + '"  class="form-control input-sm kb-pad text-center userprice" />';
+                    tr_html += '<input type="hidden" maxlength="10" name="item_user_price[]" id="suserprice_' + row_no + '" value="' + ((cart_user_price > 0) ? parseInt(cart_user_price) : parseInt(cart_item_price)) + '"  class="form-control input-sm kb-pad text-center userprice" />';
                     tr_html += (cart_user_price > 0) ? '<small class="text-left">' + parseInt(cart_item_price) + '/qty</small>' : '';
                     tr_html += '<input type="hidden" name="item_price[]" id="sprice_' + row_no + '" value="' + (formatMoney(cart_item_price)) + '" />';
                 } else {
-                    tr_html += '<input type="text" maxlength="10" name="item_price[]" id="sprice_' + row_no + '" value="' + (formatMoney(cart_item_price)) + '"  ' + item_disabled + '  class="form-control input-sm kb-pad text-center item_price userprice" />';
+                    tr_html += + formatMoney(cart_item_price); ////////rate
+                    tr_html += '<input type="hidden" maxlength="10" name="item_price[]" id="sprice_' + row_no + '" value="' + (formatMoney(cart_item_price)) + '"  ' + item_disabled + '  class="form-control input-sm kb-pad text-center item_price userprice" />';
                 }
             } else {
                 tr_html += formatMoney(parseFloat(cart_item_price)) + '<input type="hidden"  maxlength="10" name="item_price[]" id="sprice_' + row_no + '" value="' + formatMoney(cart_item_price) + '" onchange="return false" class="form-control input-sm kb-pad text-center  item_price userprice" />';
@@ -3834,8 +3833,6 @@ function loadItems() {
             tr_html += '&nbsp;  <button type="button" onclick="qtyPlus(\'' + item_id + '\')"  style="border: 0; background: none; bottom:7px!important; padding:4px;"> <i class="fa fa-plus"></i> </button> ';
             tr_html += '</td></table>';
             tr_html += '</td>';
-            tr_html += '<td class="text-center item_master_qty">' + item_master_qty + '</td>';
-
             var item_sale_unit = (item_name == 'Gift Card') ? 'pcs' : '';
             if (item.row.sale_unit) {
                 $.each(item.units, function () {
@@ -3847,6 +3844,15 @@ function loadItems() {
             //Show/Hide Cart Unit
             // if(permission_admin || permission_owner || per_cartunitview){
             tr_html += '<td class="text-center"><small>' + item_sale_unit + '</small></td>';
+            tr_html += '<td class="text-center item_master_qty">' +
+                '<input type="text" name="item_master_qty[]" class="form-control text-center" value="' + formatDecimal(item_master_qty) + '">' +
+                '</td>';
+
+            tr_html += '<td class="text-center">' + formatMoney(rate) + '</td>'; ////////rate
+
+
+            tr_html += '<td class="text-center"><input type="text" name="making_charges[]" class="form-control input-sm text-center" value="' + formatMoney(making_charges_rate) + '"></td>';
+
             //}            
             //tr_html += '<td class="text-right"><span class="text-right ssubtotal" id="subtotal_' + row_no + '">' + formatMoney(((parseFloat(item_price) + parseFloat(pr_tax_val)) * parseFloat(item_qty))) + '</span></td>';
 
@@ -3857,10 +3863,10 @@ function loadItems() {
                 if (changeQtyAsPerPrice == true && item.row.storage_type == 'loose' && cart_user_price > 0) {
                     tr_html += '<td class="text-right"><span class="text-right ssubtotal returntotal returnsubtotal" id="subtotal_' + row_no + '">' + formatMoney(cart_user_price) + '</span></td>';
                     tr_html += '<input class="returntotal returnsubtotal"  type="hidden" value="' + formatMoney(cart_user_price) + '">';
-               
+
                 } else {
                     tr_html += '<input class="returntotal returnsubtotal"  type="hidden" value="' + formatMoney(parseFloat(cart_item_price) * parseFloat(item_qty)) + '">';
-                    tr_html += '<td class="text-right" style="font-size: 13px;"><span class="text-right ssubtotal returntotal returnsubtotal" id="subtotal_' + row_no + '">' + formatMoney(parseFloat(cart_item_price) * parseFloat(item_qty)) + '</span></td>';
+                    tr_html += '<td class="text-right" style="font-size: 13px;"><span class="text-right ssubtotal returntotal returnsubtotal" id="subtotal_' + row_no + '">' + formatMoney(parseFloat(cart_item_price) * parseFloat(item_qty) + making_charges_rate) + '</span></td>';
                 }
                 tr_html += '<td class="text-center"><i class="fa fa-times tip pointer posdel" id="' + row_no + '" title="Remove" style="cursor:pointer;"></i></td>';
             }
@@ -3890,7 +3896,7 @@ function loadItems() {
             if (changeQtyAsPerPrice == true && item.row.storage_type == 'loose' && cart_user_price > 0) {
                 total += formatDecimal(cart_user_price, 6);
             } else {
-                total += formatDecimal(((parseFloat(item_price) + parseFloat(pr_tax_val)) * parseFloat(item_qty)), 6);
+                total += formatDecimal(((parseFloat(item_price) + parseFloat(pr_tax_val)) * parseFloat(item_qty) + making_charges_rate), 6);
             }
             item_qtys = Math.abs(item_qty);
             count += parseFloat(item_qtys);
@@ -4004,7 +4010,7 @@ function loadItems() {
         total = formatDecimal(total, 2);
         product_tax = formatDecimal(product_tax, 2);
         total_discount = formatDecimal(order_discount + product_discount, 2);
-      
+
 
         // Totals calculations after item addition
         gtotal = parseFloat(((total + invoice_tax) - order_discount) + shipping);
@@ -4015,7 +4021,7 @@ function loadItems() {
         $('#tds').text(formatMoney(product_discount + order_discount));
         if (site.settings.tax2 != 0) {
             $('#ttax2').text('(' + formatMoney(product_tax) + ') ' + formatMoney(invoice_tax))
-        }else{
+        } else {
             $('#ttax2').text('(' + formatMoney(product_tax) + ') ')
         }
         $('#gtotal').text(formatMoney(gtotal));
@@ -4076,34 +4082,31 @@ function loadItems() {
     var customerName = document.getElementById('customer_name').value;
     // Loop through items
     var isExchange = localStorage.getItem("isExchange");
-    if(isExchange === true)
-    {
+    if (isExchange === true) {
         exchangeOperation(isExchange);
     }
 }
-function exchangeOperation(isExchange)
-{
+function exchangeOperation(isExchange) {
     // var total_payable = parseFloat($('#gtotal').text()) || 0;
-    let itemsArray_exchange = localStorage.getItem('positems');  
-    var isValid1 = false; 
-    if(isExchange === true && itemsArray_exchange.length !==0)
-        {
-            itemsArray_exchange.forEach(item => {
-                if (item.row.base_quantity > 0) {
-                    isValid1 = true; 
-                }
-            });
-            if (itemsArray_exchange.length === 0) { 
-                isValid1 = false; 
+    let itemsArray_exchange = localStorage.getItem('positems');
+    var isValid1 = false;
+    if (isExchange === true && itemsArray_exchange.length !== 0) {
+        itemsArray_exchange.forEach(item => {
+            if (item.row.base_quantity > 0) {
+                isValid1 = true;
             }
-            
+        });
+        if (itemsArray_exchange.length === 0) {
+            isValid1 = false;
         }
-        if (isValid1 === true) {
-                $("#payment").prop("disabled", false);
-            }
-            else{
-                $("#payment").prop("disabled", true);
-            }
+
+    }
+    if (isValid1 === true) {
+        $("#payment").prop("disabled", false);
+    }
+    else {
+        $("#payment").prop("disabled", true);
+    }
 }
 function resetCartItems() {
     // alert('reset cart items');
@@ -5799,7 +5802,7 @@ if (site.settings.set_focus != 1) {
 
 function applyCoupon() {
     var coupon_code = $('#coupon_code').val();
-    
+
     // Check if cart is empty before proceeding
     if (!localStorage.getItem('positems') || Object.keys(JSON.parse(localStorage.getItem('positems'))).length === 0) {
         bootbox.alert('Add items to cart before applying coupon.');
@@ -5850,15 +5853,15 @@ function applyCoupon() {
             }
 
 
-                 isCouponValid = couponValidate(objCoupon);
+            isCouponValid = couponValidate(objCoupon);
 
-                if (!isCouponValid) {
-                    bootbox.alert('Invalid Coupon for this customer.');
-                    return;
-                }
-                else {
+            if (!isCouponValid) {
+                bootbox.alert('Invalid Coupon for this customer.');
+                return;
+            }
+            else {
                 var CouponDiscount = objCoupon.discount_rate;
-                
+
                 var ApplyDiscount = 0;
                 var minimum_cart_value = objCoupon.minimum_cart_amount;
 
@@ -5988,13 +5991,13 @@ function couponValidate(objOffer) {
     var today = new Date(); //gets current date and time
 
     //Normalize today to start of day
-    today.setHours(0, 0, 0, 0); 
+    today.setHours(0, 0, 0, 0);
 
     if (objOffer.expiry_date) {
         var offer_end_date = new Date(objOffer.expiry_date);
 
         //Normalize expiry date to start of day
-        offer_end_date.setHours(0, 0, 0, 0); 
+        offer_end_date.setHours(0, 0, 0, 0);
 
         if (today <= offer_end_date) {
             isvalid = true;
@@ -6145,8 +6148,7 @@ function oldProductSearch(rowId) {
         }
     }
 }
-function change_quantity(item_id, new_qty)
-{
+function change_quantity(item_id, new_qty) {
     positems[item_id].row.base_quantity = new_qty;
     if (positems[item_id].row.unit != positems[item_id].row.base_unit) {
         $.each(positems[item_id].units, function () {

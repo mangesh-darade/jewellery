@@ -174,7 +174,7 @@ body:before, body:after {
     display: inline-block;
 }
 #pos #leftdiv {
-    width: 35%;
+    width: 41%;
     /* max-width: 35%; */
     padding:10px 10px 5px 10px;
     background: #F5f5F5;
@@ -184,7 +184,7 @@ body:before, body:after {
 #pos #cp #cpinner {
     min-width: 500px;
     /* max-width: 65%; */
-	width: 64%;
+	width: 58%;
     float: left;
     margin-left: 1%;
     padding:10px 10px 5px 10px;

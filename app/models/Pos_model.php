@@ -3555,23 +3555,34 @@ class Pos_model extends CI_Model {
             ->row();
         return $row && $row->tokan ? (int)$row->tokan : 0;
     }
-    public function get_rate($metal_type, $metal_purity) {
-        $this->db->select('rate');
-        $this->db->from('sma_jewellerydailyrates');
-        $this->db->where('metal_type', $metal_type);
-        if (!empty($metal_purity)) {
-            $this->db->where('metal_purity', $metal_purity);
-        }
-       
-        $this->db->order_by('created_at', 'DESC');
-        $this->db->limit(1);
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            return $query->row()->rate;
-        }
+  public function get_rate($metal_type, $metal_purity) {
+    $this->db->select('*');
+    $this->db->from('sma_jewellerydailyrates');
+    $this->db->where('metal_type', $metal_type);
+    $this->db->where('metal_purity', $metal_purity);
+    $this->db->where_in('charges', ['Product', 'Making Charges']);
+    $this->db->order_by('created_at', 'DESC');
 
-        return 0; // Default if no rate found
+    $query = $this->db->get();
+    $result = $query->result();
+
+    $output = [
+        'product_rate' => 0,
+        'making_charges_rate' => 0
+    ];
+
+    foreach ($result as $row) {
+        if (trim($row->charges) === 'Product') {
+            $output['product_rate'] = $row->rate;
+        } elseif (trim($row->charges) === 'Making Charges') {
+            $output['making_charges_rate'] = $row->rate;
+        }
     }
+
+    return $output;
+}
+
+
     // public function get_latest_jewellery_rates() {
     //     $this->db->select('r.*');
     //     $this->db->from('sma_jewellerydailyrates r');

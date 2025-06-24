@@ -1163,12 +1163,17 @@ localStorage.removeItem('positems');
                                                     <!-- <th width="35%"><i class="fa fa-pencil"></i> <?= lang("Edit"); ?> -->
                                                     </th>
                                                     <th width="35%"><?= lang("product"); ?></th>
-                                                    <th width="15%"><?= lang("price"); ?></th>
-                                                    <th width="25%"><?= lang("Weight"); ?></th>
-                                                    <th width="25%"><?= lang("Qty"); ?></th>
-                                                    <?php if ($Owner || $Admin || $GP['cart-unit_view']) { ?>
+                                                    <th width="15%"><?= lang("Rate"); ?></th>
+                                                    <th width="25%"><?= lang("Wt."); ?></th>
+                                                     <?php if ($Owner || $Admin || $GP['cart-unit_view']) { ?>
                                                     <th width="10%"><?= lang("unit"); ?></th>
                                                     <?php } ?>
+                                                    <th width="25%">Article<br><?= lang("Qty"); ?></th>
+                                                    <th width="15%"><?= lang("Price"); ?></th>
+
+                                                   
+                                                    <th width="15%"><?= lang("Making"); ?></th>
+
                                                     <th width="15%"><?= lang("Sub total"); ?></th>
                                                     <th class="width5">
                                                         <i class="fa fa-trash-o"></i>
