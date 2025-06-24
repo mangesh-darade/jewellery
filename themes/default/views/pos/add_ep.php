@@ -209,6 +209,9 @@ function getSellerDetails(value) {
     span#span_value {
         margin-top: -10px;
     }
+    input.form-control.text-center {
+    height: 4vh!important;
+    }
     <?php if ($pos_settings->display_qr_code_scanner) { ?>
     input#add_item {
     width: 148% !important;

@@ -13,6 +13,9 @@
         text-align: center;
         vertical-align: middle;
         }
+        td.charge_set {
+            width: 17%;
+        }
         td.purity_set, td.unit_set,td.metal_set{
             width: 15%;
         }
@@ -21,11 +24,7 @@
         }
         input.form-control.rate-field.text-end {
             text-align: right;
-        }
-        .col-lg-12{
-          width: 90%;
-          margin-left: 6rem;
-        }
+        } 
     </style>
 </head>
 <body class="p-3">
@@ -35,6 +34,7 @@
     <table id="rates-table" class="table table-bordered table-striped table-hover">
         <thead class="table-dark">
             <tr>
+                <th>Charges</th>
                 <th>Metal Type</th>
                 <th>Purity</th>
                 <th>Unit</th>
@@ -45,6 +45,7 @@
             <?php foreach ($rates as $row): 
                 ?>
                 <tr>
+                    <td class="charge_set"><?php echo $row->charges; ?></td>
                     <td class="metal_set"><?php echo $row->metal_type; ?></td>
                     <td class="purity_set"><?php echo $row->metal_purity ?: '-'; ?></td>
                     <td class="unit_set"><?php echo $row->unit; ?></td>
