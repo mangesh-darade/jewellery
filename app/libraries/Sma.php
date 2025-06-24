@@ -3175,7 +3175,7 @@ class Sma {
         endforeach;
         $tableHeader = '<thead><tr>' . $sr_th . $table_header . '</tr></thead>';
 
-        $mrp_total = $qty_total = $weight_total = $quantity_total = $discount_total = $tax_total = $net_total = $unit_total = $total_net_price = $totalprice = $totalmrp = 0;
+        $mrp_total = $qty_total =$article_qty=$making_charges= $weight_total = $quantity_total = $discount_total = $tax_total = $net_total = $unit_total = $total_net_price = $totalprice = $totalmrp = 0;
         $item_arr = $item_return_arr = '';
         /* ------------------------------------------------HEADER End--------------------------------------  */
 
@@ -3306,7 +3306,10 @@ class Sma {
                     // if ($data == 'Making_charges') {
                     //     $making_charges = $making_charges + ($row->making_charges);
                     // }
-
+                   if ($row->making_charges || $row->article_qty) {
+                        $making_charges = ($row->making_charges);
+                        $article_qty = ($row->article_qty);
+                    }
                     if (!empty($obj->format)):
                         if ($data == 'real_unit_price') {
                             $res = $this->custom_format(($row->real_unit_price * $qty_total), $obj->format);

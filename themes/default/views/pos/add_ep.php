@@ -1174,7 +1174,7 @@ localStorage.removeItem('positems');
                                                      <?php if ($Owner || $Admin || $GP['cart-unit_view']) { ?>
                                                     <th width="10%"><?= lang("unit"); ?></th>
                                                     <?php } ?>
-                                                    <th width="25%">Article<br><?= lang("Qty"); ?></th>
+                                                    <th width="25%"><?= lang("Qty"); ?></th>
                                                     <th width="15%"><?= lang("Price"); ?></th>
 
                                                    

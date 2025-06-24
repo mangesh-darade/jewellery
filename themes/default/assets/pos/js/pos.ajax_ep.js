@@ -3182,7 +3182,6 @@ function loadItems() {
             var mrp = item.row.mrp;
             var making_charges_rate = item.row.making_charges_rate >= 0 ? (item.row.making_charges_rate * item_qty) : 0.00;
             var rate = item.row.rate >= 0 ? (item.row.rate * item_qty) : item_price;
-
             var discount_on_mrp = item.row.discount_on_mrp;
             var pr_var_discount = item.row.pr_var_discount;
             var customer_group_discount = item.row.customer_group_discount; // flag for customer discount apply
@@ -3778,7 +3777,8 @@ function loadItems() {
                     tr_html += '<input type="hidden" name="item_price[]" id="sprice_' + row_no + '" value="' + (formatMoney(cart_item_price)) + '" />';
                 } else {
                     ////////////////////////////////////// Rate Start/////////////////////////////////////////
-                    tr_html += + formatMoney(cart_item_price); ////////rate
+                  
+                    tr_html += parseFloat(cart_item_price).toFixed(2); // e.g., "123.46"
                     ////////////////////////////////////// Rate Start End/////////////////////////////////////////
                     tr_html += '<input type="hidden" maxlength="10" name="item_price[]" id="sprice_' + row_no + '" value="' + (formatMoney(cart_item_price)) + '"  ' + item_disabled + '  class="form-control input-sm kb-pad text-center item_price userprice" />';
                 }

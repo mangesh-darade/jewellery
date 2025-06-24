@@ -1903,7 +1903,7 @@ public function close_register($user_id = null) {
             }
             $row->metal_type = $row->cf1;
             $row->metal_purity = $row->cf2;
-            $row->item_master_qty = 0;
+            $row->item_master_qty = 1;
            
             unset($row->cost, $row->details, $row->product_details, $row->barcode_symbology, $row->supplier1price, $row->supplier2price, $row->cfsupplier3price, $row->supplier4price, $row->supplier5price, $row->supplier1, $row->supplier2, $row->supplier3, $row->supplier4, $row->supplier5, $row->supplier1_part_no, $row->supplier2_part_no, $row->supplier3_part_no, $row->supplier4_part_no, $row->supplier5_part_no);
             unset($row->alert_quantity, $row->article_code, $row->cf1, $row->cf2, $row->cf3, $row->cf4, $row->cf5, $row->cf6, $row->file, $row->food_type_id, $row->in_eshop, $row->is_featured, $row->purchase_unit, $row->ratings_avarage, $row->ratings_count, $row->supplier3price, $row->track_quantity, $row->updated_at, $row->comments_count);
