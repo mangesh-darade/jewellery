@@ -384,6 +384,9 @@ class Pos extends MY_Controller {
                 $item_weight = $_POST['item_weight'][$r];
                 $item_mrp_discount = $_POST['discount_on_mrp'][$r];
                 $category_id = $_POST['cat_id'][$r];
+                $article_quantity = $_POST['item_master_qty'][$r];
+                $making_charges = $_POST['making_charges'][$r];
+                $jewellery_Price = $_POST['jewellery_rate'][$r];
                 // $mrp = $_POST['mrp'][$r]; // product mrp
                 // $mrp = !empty($_POST['mrp'][$r]) ? $_POST['mrp'][$r] : 0;
 
@@ -618,6 +621,9 @@ class Pos extends MY_Controller {
                     $products[] = array(
                         'product_id' => $item_id,
                         'product_code' => $item_code,
+                        'article_qty' => $article_quantity,
+                        'making_charges' => $making_charges,
+                        'jewellery_Price' => $jewellery_Price,
                         'article_code' => $product_details->article_code,
                         'product_name' => $item_name,
                         'product_type' => $item_type,
@@ -667,8 +673,7 @@ class Pos extends MY_Controller {
                     $total += $this->sma->formatDecimal(($net_unit_price * $item_quantity), 4);
                 }
             }
-
-
+         
             if (empty($products)) {
                 $this->form_validation->set_rules('product', lang("order_items"), 'required');
             } elseif ($this->pos_settings->item_order == 1) {

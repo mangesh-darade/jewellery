@@ -3263,7 +3263,9 @@ class Sma {
                     $table_body = $table_body . '<td >' . $this->custom_format(($row->article_qty), $obj->format) . '</td>';
                 elseif ($data == 'Making_charges'):
                     $table_body = $table_body . '<td >' . $this->custom_format(($row->making_charges), $obj->format) . '</td>';
-    
+                elseif ($data == 'jewellery_price'):
+
+                    $table_body = $table_body . '<td >' . $this->custom_format(($row->jewellery_Price), $obj->format).'</td>';
 
                 elseif (!empty($obj->formula) && strpos($data, '|')):
                     $_data_arr = explode('|', $data);
@@ -3279,7 +3281,7 @@ class Sma {
                     $res = substr($res, 0, -1);
                     $table_body = $table_body . '<td>' . $res . '</td>';
                 else :
-                    
+                      
                     $class = ( in_array($data, array('mrp', 'subtotal', 'unit_quantity','quantity', 'unit_price', 'real_unit_price', 'net_price', 'invoice_net_unit_price', 'invoice_total_net_unit_price', 'net_unit_price', 'item_tax', 'item_discount', 'saving_price', 'Article_Qty','Making_charges'))) ? 'text-left' : '';
                     $mrp_total = ($data == 'mrp' && !empty($row->$data)) ? $mrp_total + $row->$data : $mrp_total;
                     $net_total = ($data == 'real_unit_price' && !empty($row->$data)) ? $net_total + $row->$data : $net_total;
@@ -3309,7 +3311,7 @@ class Sma {
                         if ($data == 'real_unit_price') {
                             $res = $this->custom_format(($row->real_unit_price * $qty_total), $obj->format);
                         }
-                         elseif($data == 'savings'){
+                        elseif($data == 'savings'){
                             
                             // $res = $this->custom_format(($row->mrp - $row->net_unit_price ), $obj->format);
                             // $saving = $saving + ($row->mrp - $row->net_unit_price);
@@ -3464,7 +3466,7 @@ class Sma {
                         $table_body = $table_body . '<td>' . $res . '</td>';
                     else :
 
-                        $class = ( in_array($data, array('mrp', 'subtotal', 'unit_quantity', 'unit_price', 'real_unit_price', 'net_price', 'invoice_net_unit_price', 'invoice_total_net_unit_price', 'net_unit_price', 'item_tax', 'item_discount', 'saving_price', 'article_qty','making_charges'))) ? 'text-left' : '';
+                        $class = ( in_array($data, array('mrp', 'subtotal', 'unit_quantity', 'unit_price', 'real_unit_price', 'net_price', 'invoice_net_unit_price', 'invoice_total_net_unit_price', 'net_unit_price', 'item_tax', 'item_discount', 'saving_price', 'article_qty','making_charges','jewellery_price'))) ? 'text-left' : '';
                         $mrp_total = ($data == 'mrp' && !empty($row->$data)) ? $mrp_total + $row->$data : $mrp_total;
                         $net_total = ($data == 'real_unit_price' && !empty($row->$data)) ? $net_total + $row->$data : $net_total;
                         $unit_total = ($data == 'unit_price' && !empty($row->$data)) ? $unit_total + $row->$data : $unit_total;

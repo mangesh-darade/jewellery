@@ -3690,8 +3690,11 @@ function loadItems() {
             // tr_html += '<span class="sname" id="name_' + row_no + '">' + item_code + ' - ' + item_name + (sel_opt ? ' (' + sel_opt + (item.note ? ': ' + item.note : '') + ')' : '') + '</span>';
             // tr_html += '<i class="pull-right fa fa-edit tip pointer edit iconsize" id="' + row_no + '" data-item="' + item_id + '" title="Edit" style="cursor:pointer;"></i>';
             // tr_html += '<td>';  
+            ///////////////////////////Product Name //////////////////////////////////////////
             tr_html += '<span class="sname" id="name_' + row_no + '">' + productCodes + item_name + (sel_opt ? ' (' + sel_opt + (item.note ? ': ' + item.note : '') + ')' : '') + '</span>';
             tr_html += '</td>';
+            ///////////////////////////Product Name  End //////////////////////////////////////////
+
             if (item.note == 'Free Items') {
                 var item_disabled = ' readonly="readonly" ';
                 tr_html += '</td>';
@@ -3757,21 +3760,24 @@ function loadItems() {
                 cart_item_price = parseFloat(item_price) + parseFloat(pr_tax_val);
             }
 
-
+            
             if (permission_admin || permission_owner || per_cartpriceedit) {
                 if (changeQtyAsPerPrice == true && item.row.storage_type == 'loose') {
                     tr_html += '<input type="hidden" maxlength="10" name="item_user_price[]" id="suserprice_' + row_no + '" value="' + ((cart_user_price > 0) ? parseInt(cart_user_price) : parseInt(cart_item_price)) + '"  class="form-control input-sm kb-pad text-center userprice" />';
                     tr_html += (cart_user_price > 0) ? '<small class="text-left">' + parseInt(cart_item_price) + '/qty</small>' : '';
                     tr_html += '<input type="hidden" name="item_price[]" id="sprice_' + row_no + '" value="' + (formatMoney(cart_item_price)) + '" />';
                 } else {
+                    ////////////////////////////////////// Rate Start/////////////////////////////////////////
                     tr_html += + formatMoney(cart_item_price); ////////rate
+                    ////////////////////////////////////// Rate Start End/////////////////////////////////////////
                     tr_html += '<input type="hidden" maxlength="10" name="item_price[]" id="sprice_' + row_no + '" value="' + (formatMoney(cart_item_price)) + '"  ' + item_disabled + '  class="form-control input-sm kb-pad text-center item_price userprice" />';
                 }
             } else {
                 tr_html += formatMoney(parseFloat(cart_item_price)) + '<input type="hidden"  maxlength="10" name="item_price[]" id="sprice_' + row_no + '" value="' + formatMoney(cart_item_price) + '" onchange="return false" class="form-control input-sm kb-pad text-center  item_price userprice" />';
             }
-            tr_html += '</td>';
 
+            tr_html += '</td>';
+            ////////////////////////////////////////// Weight ///////////////////////////////////////////
             tr_html += '<td>';
             tr_html += '<table style="border: none;"><tr ><td style="border-bottom: 0px !important;"> ';
             if (oldProductSearch(item_id)) {
@@ -3833,6 +3839,8 @@ function loadItems() {
             tr_html += '&nbsp;  <button type="button" onclick="qtyPlus(\'' + item_id + '\')"  style="border: 0; background: none; bottom:7px!important; padding:4px;"> <i class="fa fa-plus"></i> </button> ';
             tr_html += '</td></table>';
             tr_html += '</td>';
+            ////////////////////////////////////////// Weight End ///////////////////////////////////////////
+
             var item_sale_unit = (item_name == 'Gift Card') ? 'pcs' : '';
             if (item.row.sale_unit) {
                 $.each(item.units, function () {
@@ -3845,17 +3853,24 @@ function loadItems() {
             // if(permission_admin || permission_owner || per_cartunitview){
             tr_html += '<td class="text-center"><small>' + item_sale_unit + '</small></td>';
             tr_html += '<td class="text-center item_master_qty">' +
-                '<input type="text" name="item_master_qty[]" class="form-control text-center" value="' + formatDecimal(item_master_qty) + '">' +
+                '<input type="text" name="item_master_qty[]" class="form-control text-center item_master_qty" value="' + formatDecimal(item_master_qty) + '">' +
                 '</td>';
+            //////////////////////////////////////////////// Price/////////////////////////////////
+tr_html += '<td class="text-center">' +
+             '<input type="hidden" name="jewellery_rate[]" class="form-control text-center item_master_qty" value="' + formatDecimal(rate) + '">' +
+             formatMoney(rate) +
+           '</td>';
+            //////////////////////////////////////////////// Price End/////////////////////////////////
+ 
+            //////////////////////////////////////////////// Maing Charges/////////////////////////////////
 
-            tr_html += '<td class="text-center">' + formatMoney(rate) + '</td>'; ////////rate
-
-
-            tr_html += '<td class="text-center"><input type="text" name="making_charges[]" class="form-control input-sm text-center" value="' + formatMoney(making_charges_rate) + '"></td>';
+            tr_html += '<td class="text-center"><input type="text" name="making_charges[]" class="form-control input-sm text-center making_charges" value="' + formatMoney(making_charges_rate) + '"></td>';
+            //////////////////////////////////////////////// Maing Charges End/////////////////////////////////
 
             //}            
             //tr_html += '<td class="text-right"><span class="text-right ssubtotal" id="subtotal_' + row_no + '">' + formatMoney(((parseFloat(item_price) + parseFloat(pr_tax_val)) * parseFloat(item_qty))) + '</span></td>';
 
+            ///////////////////////////////////////////////////////// Subtotal/////////////////////////////////
             //Hide Item Edit Options if Items is free
             if ((item.note == 'Free Items')) {
                 tr_html += '<td class="text-center" colspan="2" style="color:green;">Offer Free Item</td>';
@@ -3870,6 +3885,7 @@ function loadItems() {
                 }
                 tr_html += '<td class="text-center"><i class="fa fa-times tip pointer posdel" id="' + row_no + '" title="Remove" style="cursor:pointer;"></i></td>';
             }
+            ///////////////////////////////////////////////////////// Subtotal End/////////////////////////////////
 
             newTr.html(tr_html);
             if (pos_settings.item_order == 1) {
