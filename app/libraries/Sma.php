@@ -3254,15 +3254,15 @@ class Sma {
                     } else {
                         $imgTag = '';
                     }
-                    $table_body = $table_body . '<td style="text-transform: capitalize; text-align:right;">' . $imgTag . $res . '</td>';
+                    $table_body = $table_body . '<td style="text-transform: capitalize; text-align:left;">' . $imgTag . $res . '</td>';
                 elseif ($data == 'unit_price'):
                     $table_body = $table_body . '<td  style="text-align:right;">' . $this->custom_format($row->unit_price, $obj->format) . '</td>';
                 elseif ($data == 'real_unit_price'):
                     $table_body = $table_body . '<td >' . $this->custom_format(($row->real_unit_price + $VariantPrice), $obj->format) . '</td>';
                 elseif ($data == 'Article_Qty'):
-                    $table_body = $table_body . '<td style="text-align:center;">' . $this->custom_format(($row->article_qty), $obj->format) . '</td>';
+                    $table_body = $table_body . '<td style="text-transform: capitalize; text-align:center;">' . $this->custom_format(($row->article_qty), $obj->format) . '</td>';
                 elseif ($data == 'Making_charges'):
-                    $table_body = $table_body . '<td style="text-align:right;">' . $this->custom_format(($row->making_charges), $obj->format) . '</td>';
+                    $table_body = $table_body . '<td style="text-transform: capitalize; text-align:right;">' . $this->custom_format(($row->making_charges), $obj->format) . '</td>';
                 elseif ($data == 'jewellery_price'):
 
                     $table_body = $table_body . '<td style="text-align:right;">' . $this->custom_format(($row->jewellery_Price), $obj->format).'</td>';
