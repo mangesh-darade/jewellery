@@ -3301,10 +3301,10 @@ class Sma {
                         }
                     }
                     // if ($data == 'Article_Qty') {
-                    //     $article_qty = $article_qty + ($row->article_qty);
+                    //     $article_qty += ($row->article_qty);
                     // }
                     // if ($data == 'Making_charges') {
-                    //     $making_charges = $making_charges + ($row->making_charges);
+                    //     $making_charges  += ($row->making_charges);
                     // }
                    if ($row->making_charges || $row->article_qty) {
                         $making_charges = ($row->making_charges);
@@ -3623,12 +3623,12 @@ class Sma {
                     case 'savings':
                         $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatMoney($saving) . '</th>';
                         break;
-                    case 'Article_Qty':
-                        $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: center;">' . $this->formatQuantity($article_qty) . '</th>';
-                        break;
-                    case 'Making_charges':
-                        $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatQuantity($making_charges) . '</th>';
-                        break;
+                    // case 'Article_Qty':
+                    //     $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: center;">' . $this->formatQuantity($article_qty) . '</th>';
+                    //     break;
+                    // case 'Making_charges':
+                    //     $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatQuantity($making_charges) . '</th>';
+                    //     break;
                     default:
                         $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;"> </th>';
                         break;

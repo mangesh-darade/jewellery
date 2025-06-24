@@ -622,8 +622,8 @@ class Pos extends MY_Controller {
                         'product_id' => $item_id,
                         'product_code' => $item_code,
                         'article_qty' => $article_quantity,
-                        'making_charges' => $making_charges,
-                        'jewellery_Price' => $jewellery_Price,
+                        'making_charges' => $this->sma->remove_commas($making_charges),
+                        'jewellery_Price' => $this->sma->remove_commas($jewellery_Price),
                         'article_code' => $product_details->article_code,
                         'product_name' => $item_name,
                         'product_type' => $item_type,
@@ -673,7 +673,6 @@ class Pos extends MY_Controller {
                     $total += $this->sma->formatDecimal(($net_unit_price * $item_quantity), 4);
                 }
             }
-         
             if (empty($products)) {
                 $this->form_validation->set_rules('product', lang("order_items"), 'required');
             } elseif ($this->pos_settings->item_order == 1) {

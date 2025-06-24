@@ -3867,13 +3867,13 @@ function loadItems() {
                 '</td>';
             //////////////////////////////////////////////// Price/////////////////////////////////
 tr_html += '<td class="text-center">' +
-             '<input type="hidden" name="jewellery_rate[]" class="form-control text-center item_master_qty" value="' + formatDecimal(rate) + '">' +
+             '<input type="hidden" name="jewellery_rate[]" class="form-control text-center item_master_qty" value="' + parseFloat(rate) + '">' +
              formatMoney(rate) +
            '</td>';
             //////////////////////////////////////////////// Price End/////////////////////////////////
  
             //////////////////////////////////////////////// Maing Charges/////////////////////////////////
-       tr_html += '<td class="text-center">' +'<input type="text" name="making_charges[]" ' +'data-item="' + item_id + '" ' +'class="form-control input-sm text-center making_charges" ' + 'value="' + formatMoney(making_charges_rate) + '">' +
+       tr_html += '<td class="text-center">' +'<input type="text" name="making_charges[]" ' +'data-item="' + item_id + '" ' +'class="form-control input-sm text-center making_charges" ' + 'value="' + parseFloat(making_charges_rate) + '">' +
     '</td>';
 
             // tr_html += '<td class="text-center"><input type="text" name="making_charges[]" data-item="' + item_id + '" class="form-control input-sm text-center making_charges" value="' + formatMoney(making_charges_rate) + '"></td>';
