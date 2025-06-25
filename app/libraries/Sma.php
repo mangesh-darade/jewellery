@@ -3566,17 +3566,17 @@ class Sma {
                 $class = ( in_array($data, array('mrp', 'subtotal', 'unit_quantity','quantity', 'unit_price', 'real_unit_price', 'net_price', 'invoice_net_unit_price', 'invoice_total_net_unit_price', 'item_tax', 'item_discount'))) ? 'text-left' : '';
               
                 switch ($data) { 
-                    case 'unit_quantity':
-                        $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: center;">' . $this->formatQuantity($qty_total) . '</th>';
-                        break;
+                    // case 'unit_quantity':
+                    //     $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: center;">' . $this->formatQuantity($qty_total) . '</th>';
+                    //     break;
 
-                    case 'quantity':
-                        $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: center;">' . $this->formatQuantity($quantity_total) . '</th>';
-                        break;
+                    // case 'quantity':
+                    //     $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: center;">' . $this->formatQuantity($quantity_total) . '</th>';
+                    //     break;
 
-                    case 'item_weight':
-                        $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatQuantity($weight_total) . 'KG</th>';
-                        break;
+                    // case 'item_weight':
+                    //     $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatQuantity($weight_total) . 'KG</th>';
+                    //     break;
 
                     case 'mrp':
                         $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatMoney($mrp_total) . '</th>';
@@ -3618,7 +3618,7 @@ class Sma {
                         break;
 
                     case 'subtotal':
-                        $footer_row1 = $footer_row1 . '<th class="" style="text-align: right;">' . $this->formatMoney($return_sale ? (($inv->total + $inv->product_tax) + ($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax)) . '</th>';
+                        $footer_row1 = $footer_row1 . '<th class="" style="text-align: right;">' . $this->formatMoney($return_sale ? (($inv->total + $inv->product_tax) + ($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax + $row->making_charges)) . '</th>';
                         break;
                     case 'savings':
                         $footer_row1 = $footer_row1 . '<th class="' . $class . '" style="text-align: right;">' . $this->formatMoney($saving) . '</th>';
@@ -3669,13 +3669,13 @@ class Sma {
 
         //------------------------Grand Total invoice---------------------//
         if ($inv->rounding): // check Rounding  issue 
-            $footer_row5 = '<tr>'
-                    . '<th colspan="' . $total_column_offset . '" >' . lang("rounding") . '</th>'
-                    . '<th class="" style="padding:1px 1px; text-align: right;">' . $this->formatMoney($inv->rounding) . '</th>'
-                    . '</tr>';
+            // $footer_row5 = '<tr>'
+            //         . '<th colspan="' . $total_column_offset . '" >' . lang("rounding") . '</th>'
+            //         . '<th class="" style="padding:1px 1px; text-align: right;">' . $this->formatMoney($inv->rounding) . '</th>'
+            //         . '</tr>';
 
-            $GTotal = $this->formatMoney($return_sale ? (($inv->grand_total + $inv->rounding) + ($return_sale->grand_total + $return_sale->rounding)) : ($inv->grand_total + $inv->rounding));
-            $GTotalW = $this->convert_number_to_words($return_sale ? (($inv->grand_total + $inv->rounding) + ($return_sale->grand_total + $return_sale->rounding)) : ($inv->grand_total + $inv->rounding));
+            $GTotal = $this->formatMoney($return_sale ? (($inv->grand_total + $inv->rounding) + ($return_sale->grand_total + $return_sale->rounding)) : ($inv->grand_total + $inv->rounding + $row->making_charges));
+            $GTotalW = $this->convert_number_to_words($return_sale ? (($inv->grand_total + $inv->rounding) + ($return_sale->grand_total + $return_sale->rounding)) : ($inv->grand_total + $inv->rounding + $row->making_charges));
             $GTotalW = !empty($GTotalW) ? '<span style="text-transform: uppercase;font-size: smaller;float: right;padding-right: 25px; "> ( ' . $GTotalW . ' ' . $this->currencyLable . ' Only ) </span>' : '';
             $footer_row5 = $footer_row5_shipping . $footer_row5 . '<tr>'
                     . '<th colspan="' . $total_column_offset . '" >' . lang("grand_total") . $GTotalW . '</th>'
